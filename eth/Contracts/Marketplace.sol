@@ -31,15 +31,15 @@ contract Marketplace is IMarketplace, Ownable {
     }
 
     enum LicenseStatus { PURCHASED, LINKED, REVOKED, EXPIRED }
-    enum LicenseType { NONCOMMERLIAL, COMMERCIAL }
+    enum LicenseType { NONCOMMERCIAL, COMMERCIAL }
 
     mapping (string => uint) isrcToRecordings;
     mapping (uint => Recording) Recordings;
-    License[] Licences;
-    Licensor[] Licencors;
+    License[] Licenses;
+    Licensor[] Licensors;
 
     function RegisterLicensor(string _omiEndpointURL, string _name) public {
-        Licencors.push(
+        Licensors.push(
             {
                 licensorID: Licenses.length,
                 omiEndpoint: _omiEndpointURL,
@@ -85,7 +85,7 @@ contract Marketplace is IMarketplace, Ownable {
    }
 
     function IssueLicense(uint _userId, uint _recordingID, uint8 _licenseType) public returns (uint licenseID){
-       uint licenseID = Licences.length;
+       uint licenseID = s.length;
        licenses.push (
            {
             licenseID: licenseID,
@@ -96,7 +96,7 @@ contract Marketplace is IMarketplace, Ownable {
         );
         // TODO: emit event
 
-        Recordings[_recordingID].Licences.push(licenseID);
+        Recordings[_recordingID].s.push(licenseID);
         Recording.licensesCount++;
     }
 
