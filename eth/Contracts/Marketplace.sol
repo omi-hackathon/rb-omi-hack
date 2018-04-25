@@ -27,9 +27,11 @@ contract Marketplace is IMarketplace, Ownable {
         uint userId;
         uint recordingID;
         uint8 status;
+        uint8 licenseType;
     }
 
     enum LicenseStatus { PURCHASED, LINKED, REVOKED, EXPIRED }
+    enum LicenseType { NONCOMMERLIAL, COMMERCIAL }
 
     mapping (string => uint) isrcToRecordings;
     mapping (uint => Recording) Recordings;
@@ -48,14 +50,16 @@ contract Marketplace is IMarketplace, Ownable {
     }
 
     function RegisterRecording(uint _internalID, bytes12 _isrc, uint _licensorID) public returns (uint recordingID) {
+        uint recordingID = Recordings.length;
         Recording.push(
             {
-
+                recordingID: recordingID,
+                isrc: _isrc,
+                licensorID: _licensorID,
+                internalID: _internalID
             }
         );
 
-        recordingID = Recordings.length;
-        
         // TODO: emit event
 
         isrcToRecordings[_isrc] = recordingID;
@@ -80,7 +84,7 @@ contract Marketplace is IMarketplace, Ownable {
         );
    }
 
-    function IssueLicense(uint _userId, uint _recordingID) public returns (uint){
+    function IssueLicense(uint _userId, uint _recordingID, uint8 _licenseType) public returns (uint licenseID){
        uint licenseID = Licences.length;
        licenses.push (
            {
@@ -95,15 +99,5 @@ contract Marketplace is IMarketplace, Ownable {
         Recordings[_recordingID].Licences.push(licenseID);
         Recording.licensesCount++;
     }
-
-
-
-    
-    
-    
-
-
-
-
 
 }
