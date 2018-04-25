@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "lint": "cd ui && yarn lint && cd .. && cd api && yarn lint && cd ..",
-        "build": "cd ui && yarn run build && cd .. && yarn lint",
+        "build": "cd ui && yarn run build && cd .. && cd api && yarn run build && cd .. && yarn lint",
         "prestart": "yarn run build",
         "start-parity": "sh scripts/start-parity.sh",
         "start-parity:local": "parity --chain=kovan --jsonrpc-apis web3,eth,pubsub,net,parity,parity_pubsub,traces,rpc,secretstore,personal --mode active",
