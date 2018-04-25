@@ -1,0 +1,30 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "node"
+    ],
+    "env": {
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "script",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "no-console": "off",
+        "import/no-commonjs": "off",
+        "import/no-nodejs-modules": "off",
+        "quotes": [
+            2,
+            "single"
+        ],
+        "strict": [
+            "error",
+            "global"
+        ],
+        "curly": "warn"
+    }
+}
