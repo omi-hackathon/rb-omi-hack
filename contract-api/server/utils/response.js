@@ -54,9 +54,6 @@ module.exports = class Response {
     static UnsupportedMediaType(payload) {
         return new Response(415, { 'Content-Type': 'application/json' }, payload);
     }
-    static UnprocessableEntity(payload) {
-        return new Response(422, { 'Content-Type': 'application/json' }, payload);
-    }
     static TooManyRequests(payload) {
         return new Response(429, { 'Content-Type': 'application/json' }, payload);
     }
