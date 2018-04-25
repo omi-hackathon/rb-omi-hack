@@ -5,6 +5,7 @@ const logger = require('winston');
 const helmet = require('helmet');
 const path = require('path');
 const compression = require('compression');
+const config = require('./config');
 
 const port = 4000;
 const app = express();
