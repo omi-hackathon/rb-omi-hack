@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "lint": "./node_modules/eslint/bin/eslint.js ./server",
+        "build": "yarn install",
         "start:reload": "export NODE_ENV=local && nodemon ./server/index.js",
         "stop": "sh ./scripts/stop.sh && forever list",
         "prestart": "yarn run lint",
