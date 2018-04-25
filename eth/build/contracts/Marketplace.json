@@ -1,0 +1,363 @@
+{
+  "contractName": "Marketplace",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "licenseID",
+          "type": "uint256"
+        }
+      ],
+      "name": "RevokeLicense",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "licenseID",
+          "type": "uint256"
+        }
+      ],
+      "name": "GetLicense",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "isrc",
+          "type": "string"
+        }
+      ],
+      "name": "GetRecordingByISRC",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "bytes12"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "userId",
+          "type": "uint256"
+        },
+        {
+          "name": "recordingID",
+          "type": "uint256"
+        }
+      ],
+      "name": "IssueLicense",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_omiEndpointURL",
+          "type": "string"
+        },
+        {
+          "name": "_name",
+          "type": "string"
+        }
+      ],
+      "name": "RegisterLicensor",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_internalID",
+          "type": "uint256"
+        },
+        {
+          "name": "_isrc",
+          "type": "bytes12"
+        },
+        {
+          "name": "_licensorID",
+          "type": "uint256"
+        }
+      ],
+      "name": "RegisterRecording",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "recordingID",
+          "type": "uint256"
+        }
+      ],
+      "name": "GetRecording",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "bytes12"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "licenseID",
+          "type": "uint256"
+        }
+      ],
+      "name": "LinkToLicense",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.19;\r\n\r\nimport \"./IMarketplace.sol\";\r\n\r\ncontract Marketplace is IMarketplace {\r\n}",
+  "sourcePath": "C:\\Users\\Lukas\\Documents\\work\\OpenMusicInitiative\\GitHub\\rb-omi-hack\\eth\\contracts\\Marketplace.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Lukas/Documents/work/OpenMusicInitiative/GitHub/rb-omi-hack/eth/contracts/Marketplace.sol",
+    "exportedSymbols": {
+      "Marketplace": [
+        132
+      ]
+    },
+    "id": 133,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 128,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "absolutePath": "/C/Users/Lukas/Documents/work/OpenMusicInitiative/GitHub/rb-omi-hack/eth/contracts/IMarketplace.sol",
+        "file": "./IMarketplace.sol",
+        "id": 129,
+        "nodeType": "ImportDirective",
+        "scope": 133,
+        "sourceUnit": 127,
+        "src": "28:28:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": [],
+            "baseName": {
+              "contractScope": null,
+              "id": 130,
+              "name": "IMarketplace",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 126,
+              "src": "84:12:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IMarketplace_$126",
+                "typeString": "contract IMarketplace"
+              }
+            },
+            "id": 131,
+            "nodeType": "InheritanceSpecifier",
+            "src": "84:12:1"
+          }
+        ],
+        "contractDependencies": [
+          126
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 132,
+        "linearizedBaseContracts": [
+          132,
+          126
+        ],
+        "name": "Marketplace",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 133,
+        "src": "60:41:1"
+      }
+    ],
+    "src": "0:101:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Lukas/Documents/work/OpenMusicInitiative/GitHub/rb-omi-hack/eth/contracts/Marketplace.sol",
+    "exportedSymbols": {
+      "Marketplace": [
+        132
+      ]
+    },
+    "id": 133,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 128,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "absolutePath": "/C/Users/Lukas/Documents/work/OpenMusicInitiative/GitHub/rb-omi-hack/eth/contracts/IMarketplace.sol",
+        "file": "./IMarketplace.sol",
+        "id": 129,
+        "nodeType": "ImportDirective",
+        "scope": 133,
+        "sourceUnit": 127,
+        "src": "28:28:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": [],
+            "baseName": {
+              "contractScope": null,
+              "id": 130,
+              "name": "IMarketplace",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 126,
+              "src": "84:12:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IMarketplace_$126",
+                "typeString": "contract IMarketplace"
+              }
+            },
+            "id": 131,
+            "nodeType": "InheritanceSpecifier",
+            "src": "84:12:1"
+          }
+        ],
+        "contractDependencies": [
+          126
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 132,
+        "linearizedBaseContracts": [
+          132,
+          126
+        ],
+        "name": "Marketplace",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 133,
+        "src": "60:41:1"
+      }
+    ],
+    "src": "0:101:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-04-25T15:13:58.096Z"
+}
