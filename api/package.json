@@ -1,0 +1,31 @@
+{
+    "name": "creator-tip-dapp",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "lint": "./node_modules/eslint/bin/eslint.js ./server",
+        "start:reload": "export NODE_ENV=local && nodemon ./server/index.js",
+        "stop": "sh ./scripts/stop.sh && forever list",
+        "prestart": "yarn run lint",
+        "start": "sh ./scripts/start.sh"
+    },
+    "dependencies": {
+        "eslint": "^4.19.1",
+        "axios": "^0.17.1",
+        "body-parser": "~1.17.1",
+        "cookie-parser": "~1.4.3",
+        "dotenv": "^4.0.0",
+        "eslint-config-node": "^2.0.0",
+        "express": "~4.15.2",
+        "helmet": "^3.9.0",
+        "joi": "^13.1.0",
+        "lodash": "^4.17.5",
+        "moment": "^2.20.1",
+        "morgan": "^1.8.2",
+        "request": "^2.83.0",
+        "request-promise": "^4.2.2",
+        "require-dir": "^0.3.2",
+        "serve-favicon": "~2.4.2",
+        "winston": "^2.4.0"
+    }
+}

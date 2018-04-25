@@ -1,0 +1,12 @@
+{
+    "name": "creator-tip-dapp-ui-client",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {},
+    "scripts": {
+        "lint": "./node_modules/eslint/bin/eslint.js ./src",
+        "copy-index": "mkdir -p dist && cp index.html dist",
+        "build:watch": "yarn install && yarn run copy-index & webpack --config webpack.config.dev.js --watch",
+        "build": "yarn install && yarn run copy-index && node build.js"
+    }
+}

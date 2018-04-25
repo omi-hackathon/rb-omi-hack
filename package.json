@@ -1,0 +1,15 @@
+{
+    "name": "bk-ifpi-poc",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "lint": "cd ui && yarn lint && cd .. && cd api && yarn lint && cd ..",
+        "build": "cd ui && yarn run build && cd .. && yarn lint",
+        "prestart": "yarn run build",
+        "start": "cd api && yarn start && cd ../ui && yarn start",
+        "stop": "cd api && yarn stop && cd ../ui && yarn stop",
+        "start:reload": "concurrently \"cd api; yarn start:reload\" \"cd ui; yarn start:reload\""
+    },
+    "devDependencies": {},
+    "dependencies": {}
+}
