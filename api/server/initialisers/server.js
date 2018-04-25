@@ -49,8 +49,8 @@ module.exports = function () {
             return Response.InternalServerError(process.env.NODE_ENV === 'development' ? err : {}).send(res);
         });
 
-        app.listen(config.api.port);
-        logger.info(`[SERVER] Listening on port ${config.api.port}`);
+        app.listen(process.env.PORT);
+        logger.info(`[SERVER] Listening on port ${process.env.PORT}`);
 
         return resolve(app);
     });

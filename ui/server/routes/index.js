@@ -1,5 +1,4 @@
 const rp = require('request-promise'); // TODO move to axios
-const config = require('../config');
 
 module.exports = function (app) {
     app.use('/api/*', async (req, res) => {
@@ -8,7 +7,7 @@ module.exports = function (app) {
         }
         try {
             let fwdResponse = await rp({
-                uri: config.api + req.originalUrl.substr(4),
+                uri: `http://localhost:${process.env.API_PORT}${req.originalUrl.substr(4)}`,
                 qs: req.query,
                 body: req.body,
                 headers: req.headers,

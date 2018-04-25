@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -6,11 +8,7 @@ const helmet = require('helmet');
 const path = require('path');
 const compression = require('compression');
 
-const port = 4000;
 const app = express();
-
-// Set app config
-app.set('api', process.env.API_PORT);
 
 // Security
 app.use(helmet());
@@ -44,6 +42,6 @@ app.get('*', function(req, res) {
 
 // Listen for requests
 logger.info('[SERVER] Starting...');
-const server = app.listen(port, function() {
+const server = app.listen(process.env.PORT, function() {
     logger.info(`Magic happens on port ${server.address().port}`.green);
 });

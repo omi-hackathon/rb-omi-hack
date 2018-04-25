@@ -1,8 +1,7 @@
+require('dotenv').load();
+
 const logger = require('winston');
 const initServer = require('./initialisers/server');
-
-// Load env vars from .env file into process.env
-require('dotenv').load();
 
 logger.info('[APP] Starting server initialization...');
 
