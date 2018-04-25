@@ -4,25 +4,13 @@ const configs = {
     globals: {},
     local: {
         api: {
-            port: 3000,
             version: 'v1',
-            url: 'http://localhost:3000/v1'
-        },
-        ui: {
-            port: 4000,
-            url: 'http://localhost:4000'
         },
         cors_origin: '*',
     },
     development: {
         api: {
-            port: 3000,
             version: 'v1',
-            url: 'http://localhost:3000/v1'
-        },
-        ui: {
-            port: 4000,
-            url: 'http://localhost:4000'
         },
         cors_origin: '*',
     },
