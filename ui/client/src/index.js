@@ -2,8 +2,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
+import { Redirect, Route, Switch } from 'react-router';
 import { isAuthenticated } from './utils/auth';
 //import Loader from 'components/loader/loader';
 import Header from 'components/header/header';
