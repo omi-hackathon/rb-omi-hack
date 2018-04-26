@@ -4,13 +4,10 @@ import "./ILicensor.sol";
 import "./Ownable.sol";
 
 contract Licensor is ILicensor, Ownable {
-    
-    // structs
-    struct Licensor {
-        uint licensorID;
-        string omiEndpoint;
-        string name;
-    }
+
+    string omiEndpoint;
+    string licensorName;
+
 
     struct Recording {
         uint recordingID;
@@ -39,15 +36,9 @@ contract Licensor is ILicensor, Ownable {
     License[] Licenses;
     Licensor[] Licensors;
 
-    function RegisterLicensor(string _omiEndpointURL, string _name) public {
-        Licensors.push(
-            {
-                licensorID: Licenses.length,
-                omiEndpoint: _omiEndpointURL,
-                name: _name
-            }
-        );
-        // TODO: emit event
+    function Licensor(string _omiEndpointURL, string _licensorName) public {
+            omiEndpoint = _omiEndpointURL;
+            licensorName = _licensorName;
     }
 
     function RegisterRecording(uint _internalID, string _isrc, uint _licensorID) public returns (uint recordingID) {
