@@ -31,7 +31,7 @@ module.exports = function(options, contracts) {
             return Response.BadRequest(err).send(res);
         }
         const result = await contracts[req.params.contractName].read(req.params.functionName, req.query);
-        return Response.OK(result).send(res);
+        return Response.OK({ result }).send(res);
     });
 
     return router;
