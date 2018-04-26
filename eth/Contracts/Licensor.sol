@@ -8,7 +8,6 @@ contract Licensor is ILicensor, Ownable {
     string omiEndpoint;
     string licensorName;
 
-
     struct Recording {
         uint recordingID;
         string isrc;
@@ -32,7 +31,13 @@ contract Licensor is ILicensor, Ownable {
 
     mapping (string => uint) isrcToRecordings;
     mapping (uint => Recording) Recordings;
+    mapping ()
+    // recordings by isrc
     //userID to Licenses
+
+
+
+
     License[] Licenses;
     Licensor[] Licensors;
 
@@ -41,14 +46,12 @@ contract Licensor is ILicensor, Ownable {
             licensorName = _licensorName;
     }
 
-    function RegisterRecording(uint _internalID, string _isrc, uint _licensorID) public returns (uint recordingID) {
+    function RegisterRecording(string _isrc) public returns (uint recordingID) {
         uint recordingID = Recordings.length;
         Recording.push(
             {
                 recordingID: recordingID,
                 isrc: _isrc,
-                licensorID: _licensorID,
-                internalID: _internalID
             }
         );
 
@@ -67,15 +70,22 @@ contract Licensor is ILicensor, Ownable {
         );
     }
      
-   function GetRecordingByISRC(string _isrc) public returns (uint, string, uint, uint8){
+    function GetRecordingByISRC(string _isrc) public returns (uint, string, uint, uint8){
        return (
             isrcToRecordings[_isrc].recordingID,
             isrcToRecordings[_isrc].isrc,
             isrcToRecordings[_isrc].licensorID,
             isrcToRecordings[_isrc].internalID
         );
-   }
+    }
 
+    function GetRecordingByVideoId(string videoID) constant public returns (uint, string, uint, uint8){
+
+    }
+    function GetRecordingByUserId(string userId) constant public returns (uint, string, uint, uint8){
+
+    }
+    
     function IssueLicense(uint _userId, uint _recordingID, uint8 _licenseType) public returns (uint licenseID){
        uint licenseID = s.length;
        licenses.push (
@@ -91,5 +101,10 @@ contract Licensor is ILicensor, Ownable {
         Recordings[_recordingID].s.push(licenseID);
         Recording.licensesCount++;
     }
+
+
+
+
+
 
 }
