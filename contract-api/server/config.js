@@ -14,7 +14,7 @@ const configs = {
                     address: '0x00dA34fE68c192E4d3FD02c38aB9773E5C75A475',
                     password: process.env.OWNER_PASSWORD,
                 },
-                address: '0x98d83cacf4ed66417457f0fb4de575629b078e41',
+                address: '0xbc4aad160116da5cfdfc46abc804ca6661c0c16e',
             },
         },
         cors_origin: '*',

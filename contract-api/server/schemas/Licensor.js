@@ -19,9 +19,9 @@ module.exports = {
         },
         outputs: {},
     },
-    RegisterRecordings: {
+    RegisterRecording: {
         inputs: {
-            _isrcs: {
+            _isrc: {
                 transform: value => value,
                 validate: Joi.any(),
             },

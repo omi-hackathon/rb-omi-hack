@@ -152,6 +152,7 @@ class Contract {
             const result = await contract.methods[functionName](...args).call({
                 from: this.owner.address,
             });
+            console.log('Call succeeded. Result:', result);
 
             // transform result according to schema
             // single return value:
