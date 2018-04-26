@@ -11,27 +11,22 @@ contract Licensor is ILicensor, Ownable {
     struct Recording {
         uint recordingID;
         string isrc;
-        uint licensorID;
-        string internalID;
-
-        uint[] licenses;
-        uint licensesCount;
     }
         
     struct License {
         uint licenseID;
-        uint userId; //string?
+        string userId;
         uint recordingID;
         uint8 status;
         uint8 licenseType;
+        string videoID;
     }
 
     enum LicenseStatus { PURCHASED, LINKED, REVOKED, EXPIRED }
     enum LicenseType { NONCOMMERCIAL, COMMERCIAL }
 
-    mapping (string => uint) isrcToRecordings;
-    mapping (uint => Recording) Recordings;
-    mapping ()
+    mapping (string => uint) isrcToRecordings; //isrc to recordingID
+    Recordings[] Recording;
     // recordings by isrc
     //userID to Licenses
 
@@ -60,13 +55,11 @@ contract Licensor is ILicensor, Ownable {
         isrcToRecordings[_isrc] = recordingID;
     }
 
-    function GetRecording(uint _recordingID) public returns (uint, string, uint, uint8){
+    function GetRecording(uint _recordingID) public returns (uint, string){
         Recording memory rec = Recordings[_recordingID];
         return (
             rec.recordingID,
-            rec.isrc,
-            rec.licensorID,
-            rec.internalID
+            rec.isrc
         );
     }
      
