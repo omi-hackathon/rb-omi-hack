@@ -1,0 +1,14 @@
+@import '../../scss/variables';
+
+.purchase-modal .modal-overlay .modal {
+    max-width: 600px;
+
+    .modal__content {
+        background-color: #fff;
+        padding: 0 $spacing-s;
+
+        > p {
+            line-height: 150%;
+        }
+    }
+}

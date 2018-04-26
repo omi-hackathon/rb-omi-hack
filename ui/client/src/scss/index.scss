@@ -1,5 +1,20 @@
 @import './variables';
+@import './mixins';
 
 * {
     font-family: Arial, sans-serif;
+}
+
+// Apply mixins
+
+button.button {
+    @include button();
+}
+
+.modal-overlay {
+    @include modal-overlay();
+
+    .modal {
+        @include modal();
+    }
 }
