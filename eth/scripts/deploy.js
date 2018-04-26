@@ -3,13 +3,11 @@ require('dotenv').load();
 require('colors');
 const argv = require('yargs').argv
 const web3 = require('web3');
-const constants = require('../server/utils/constants');
 
 if (!argv.contract) {
     console.log('Please specify the contract name!'.red);
     process.exit(1);
 }
-
 const web3MainNet = new web3(new web3.providers.HttpProvider("http://localhost:8545"));
 
 (async function() {
@@ -22,14 +20,22 @@ const web3MainNet = new web3(new web3.providers.HttpProvider("http://localhost:8
             null,
         );
 
-        const contract = require(`../blockchain/build/contracts/${argv.contract}.json`);
-        console.log(contract)
+        const contract = require(`../build/contracts/${argv.contract}.json`);
         const receipt = await new Promise((resolve, reject) => {
-            new web3MainNet.eth.Contract(contract.abi).deploy({
-                data: contract.bytecode,
-                arguments: [process.env.OWNER_ADDRESS]
+            const contractInstance = new web3MainNet.eth.Contract(contract.abi);
+            // var bytecodeWithParam = contractInstance.new.getData(
+            //     'test', 'test',
+            //     { data: contract.bytecode }
+            // );
+            contractInstance.deploy({
+                data: '0x' + contract.bytecode,
+                arguments: [
+                    'test', 'test',
+                    // web3.utils.toHex('https://omi01.docs.apiary.io'),
+                    // web3.utils.toHex('RedBull Media House')
+                ]
             }).send({
-                from: process.env.OWNER_ADDRESS,
+                from: process.env.OWNER_ADDRESS.toLowerCase(),
                 gas: 2000000
             })
             .on('error', err => reject(err))
