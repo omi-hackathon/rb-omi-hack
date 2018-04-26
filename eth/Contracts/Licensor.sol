@@ -3,6 +3,7 @@ pragma experimental ABIEncoderV2;
 
 import "./ILicensor.sol";
 import "./Ownable.sol";
+import "./Utils.sol";
 
 contract Licensor is ILicensor, Ownable {
 
@@ -69,7 +70,7 @@ contract Licensor is ILicensor, Ownable {
             recordingID: _recordingID,
             status: uint8(LicenseStatus.PURCHASED),
             licenseType: _licenseType,
-            videoId: ""
+            videoID: ""
         });
         licenses.push(l);
         userIDToLicenseIDs[_userID].push(licenseID);
@@ -87,7 +88,7 @@ contract Licensor is ILicensor, Ownable {
 
     // ------------- PUBLIC READS ----------------
 
-    function GetLicense(uint _licenseID) constant public returns (uint, string, uint, uint8, uint8, string) {
+    function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint8, uint8, string) {
         License memory l = licenses[_licenseID];
         return (
             l.licenseID,
@@ -99,15 +100,15 @@ contract Licensor is ILicensor, Ownable {
         );
     }
 
-    function GetRecording(uint _recordingID) constant public returns (uint, string) {
+    function GetRecording(uint _recordingID) view public returns (uint, string) {
         Recording memory r = recordings[_recordingID];
         return (
             r.recordingID,
             r.isrc
         );
     }
-     
-    function GetRecordingByISRC(string _isrc) constant public returns (uint, string) {
+    
+    function GetRecordingByISRC(string _isrc) view public returns (uint, string) {
         Recording memory r = recordings[isrcToRecordingID[_isrc]];
         return (
             r.recordingID,
@@ -115,27 +116,21 @@ contract Licensor is ILicensor, Ownable {
         );
     }
 
-    function GetLicenseByVideoID(string _videoID) constant public returns (uint, string, uint, uint8, uint8, string)  {
-        License memory l = licenses[videoIDtoLicenseIDs[_videoID]];
-        return (
-            l.licenseID,
-            l.userID,
-            l.recordingID,
-            l.status,
-            l.licenseType,
-            l.videoID
-        );
+    function GetLicensesByVideoID(string _videoID) view public returns (string)  {
+        uint[] memory ls = videoIDtoLicenseIDs[_videoID];
+        string memory s = "";
+        for (uint i = 0; i < ls.length; i++) {
+            s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[0]));
+        }
+        return s;
     }
 
-    function GetLicenseByUserID(string _userID) constant public returns (uint, string, uint, uint8, uint8, string)  {
-        License memory l = licenses[userIDToLicenseIDs[_userID]];
-        return (
-            l.licenseID,
-            l.userID,
-            l.recordingID,
-            l.status,
-            l.licenseType,
-            l.videoID    
-        );
+    function GetLicensesByUserID(string _userID) view public returns (string) {
+        uint[] memory ls = userIDToLicenseIDs[_userID];
+        string memory s = "";
+        for (uint i = 0; i < ls.length; i++) {
+            s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[0]));
+        }
+        return s;
     }
 }
