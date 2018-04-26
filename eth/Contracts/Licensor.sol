@@ -23,8 +23,8 @@ contract Licensor is ILicensor, Ownable {
         uint licenseID;
         string userID;
         uint recordingID;
-        uint8 status;
-        uint8 licenseType;
+        uint status;
+        uint licenseType;
         string videoID;
     }
 
@@ -51,8 +51,10 @@ contract Licensor is ILicensor, Ownable {
     // ------------- PUBLIC WRITES ----------------
 
     function RegisterRecordings(string[] _isrcs) public onlyOwner returns (uint) {
+        require(_isrcs.length > 0);
         uint recordingID = recordings.length;
         for (uint i = 0; i < _isrcs.length; i++) {
+            //require(isrcToRecordingID[_isrc] == 0);
             Recording memory r = Recording({
                 recordingID: recordingID,
                 isrc: _isrcs[i]
@@ -63,13 +65,15 @@ contract Licensor is ILicensor, Ownable {
         }
     }
     
-    function IssueLicense(string _userID, uint _recordingID, uint8 _licenseType) public onlyOwner returns (uint) {
+    function IssueLicense(string _userID, uint _recordingID, uint _licenseType) public onlyOwner returns (uint) {
+        require(recordings[_recordingID] != 0);
+        require(_licenseType == uint(LicenseType.NONCOMMERCIAL) || _licenseType == uint(LicenseType.COMMERCIAL));
         uint licenseID = licenses.length;
         License memory l = License({
             licenseID: licenseID,
             userID: _userID,
             recordingID: _recordingID,
-            status: uint8(LicenseStatus.PURCHASED),
+            status: uint(LicenseStatus.PURCHASED),
             licenseType: _licenseType,
             videoID: ""
         });
@@ -84,12 +88,12 @@ contract Licensor is ILicensor, Ownable {
     }
 
     function RevokeLicense(uint _licenseID) public onlyOwner {
-        licenses[_licenseID].status = uint8(LicenseStatus.REVOKED);
+        licenses[_licenseID].status = uint(LicenseStatus.REVOKED);
     }
 
     // ------------- PUBLIC READS ----------------
 
-    function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint8, uint8, string) {
+    function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint, uint, string) {
         License memory l = licenses[_licenseID];
         return (
             l.licenseID,
