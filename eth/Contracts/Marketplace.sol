@@ -24,7 +24,7 @@ contract Marketplace is IMarketplace, Ownable {
         
     struct License {
         uint licenseID;
-        uint userId;
+        uint userId; //string?
         uint recordingID;
         uint8 status;
         uint8 licenseType;
@@ -35,6 +35,7 @@ contract Marketplace is IMarketplace, Ownable {
 
     mapping (string => uint) isrcToRecordings;
     mapping (uint => Recording) Recordings;
+    //userID to Licenses
     License[] Licenses;
     Licensor[] Licensors;
 
