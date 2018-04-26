@@ -26,15 +26,14 @@ contract Licensor is ILicensor, Ownable {
     enum LicenseType { NONCOMMERCIAL, COMMERCIAL }
 
     mapping (string => uint) isrcToRecordings; //isrc to recordingID
-    Recordings[] Recording;
-    // recordings by isrc
-    //userID to Licenses
-
-
-
-
+    // recordingIDs to Recordings
+    Recording[] Recordings;
+    // licenseIDs to Licenses
     License[] Licenses;
-    Licensor[] Licensors;
+    // userID to Licenses
+    mapping (string => License) userIDToLicenses;
+    // videoID to Licenses
+    mapping (string => License) videoIDtoLicenses;
 
     function Licensor(string _omiEndpointURL, string _licensorName) public {
             omiEndpoint = _omiEndpointURL;
@@ -95,9 +94,13 @@ contract Licensor is ILicensor, Ownable {
         Recording.licensesCount++;
     }
 
-
-
-
-
-
+    function GetLicense(uint _licenseID) constant public returns (string, uint, uint, uint8){
+        Recording memory lic = Licenses[_licenseID];
+        return (
+            lic.userID,
+            lic.recordingID,
+            lic.status,
+            lic.licenseType
+        );
+    }
 }
