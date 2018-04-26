@@ -137,6 +137,7 @@ contract Licensor is ILicensor, Ownable {
 
     function GetLicensesByVideoID(string _videoID) view public returns (string)  {
         uint[] memory ls = videoIDtoLicenseIDs[_videoID];
+        require(ls.length > 0);
         string memory s = "";
         for (uint i = 0; i < ls.length; i++) {
             s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[0]));
@@ -146,6 +147,7 @@ contract Licensor is ILicensor, Ownable {
 
     function GetLicensesByUserID(string _userID) view public returns (string) {
         uint[] memory ls = userIDToLicenseIDs[_userID];
+        require(ls.length > 0);
         string memory s = "";
         for (uint i = 0; i < ls.length; i++) {
             s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[0]));
