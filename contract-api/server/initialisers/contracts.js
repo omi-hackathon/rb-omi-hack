@@ -4,7 +4,7 @@ const Contract = require('../utils/contract');
 
 module.exports = async function() {
     const contracts = {};
-    const filenames = fs.readdirSync('build/contracts'); // eslint-disable-line no-sync
+    const filenames = fs.readdirSync('../eth/build/contracts'); // eslint-disable-line no-sync
     for (const filename of filenames) {
         const contract = config.contracts[filename.replace('.json', '')];
         if (!contract.owner || !contract.address) {

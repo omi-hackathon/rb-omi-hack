@@ -9,7 +9,7 @@ class Contract {
     // @param address       the address of the deployed contract
     // @param owner         { address, password } credentials for the contract owner account
     constructor(filename, address, owner) {
-        this.source = require(`../../build/contracts/${filename}`);
+        this.source = require(`../../../eth/build/contracts/${filename}`);
         this.address = address;
         this.owner = owner;
 

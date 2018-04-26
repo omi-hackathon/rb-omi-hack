@@ -9,9 +9,9 @@ const configs = {
             version: 'v1',
         },
         contracts: {
-            Migrations: {
-                owner: '',
-                address: '',
+            SimpleStorage: {
+                owner: 'abc',
+                address: 'abc',
             },
         },
         cors_origin: '*',
