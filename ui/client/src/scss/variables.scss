@@ -2,8 +2,14 @@
 $color-white: #fff;
 $color-black: #121212;
 $color-red: #db0a40;
+$color-greyscale-smoke: #edeff0;
+$color-gray: #bbb;
 
+$color-dark-gray: #555;
 $color-dark-red: #bb0a40;
+
+$color-light-gray: #ddd;
+$color-light-red: #ee164f;
 
 // SIZING
 $spacing-xl: 32px;
@@ -26,5 +32,11 @@ $text-h3-size: 20px;
 $text-h4-size: 16px;
 $text-h5-size: 12px;
 
+// FONT FAMILIES
+$text-font-default: 'Open Sans', system-ui, sans-serif;
+
 // BORDERS
-$border-radius-soft: 3px;
+$border-radius-soft: 2px;
+
+// SHADOWS
+$shadow-black-0: 0 1px 1px rgba(88, 91, 93, 0.3);
