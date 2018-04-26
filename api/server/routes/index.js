@@ -22,10 +22,29 @@ module.exports = function(app) {
     app.use(`/${config.api.version}/api/*`, checkYoutubeToken);
 
     app.get(`/${config.api.version}/api/licenses`, (req, res) => {
-        res.json([]);
+        res.json([
+            {
+                comment: 'dummy license, Mike please forgive me :praying-emoji:',
+                licenseID: '123licenseID456',
+                link: null,
+            },
+            {
+                comment: 'dummy license2, Mike please forgive me :praying-emoji:',
+                licenseID: '456licenseID789',
+                link: 'https://www.youtube.com/watch?v=WI4-HUn8dFc',
+            },
+        ]);
     });
 
     app.post(`/${config.api.version}/api/license/purchase`, (req, res) => {
+        console.log(req.body);
+        setTimeout(() => {
+            res.sendStatus(200);
+        }, 3000);
+    });
+
+    app.post(`/${config.api.version}/api/license/:id/link`, (req, res) => {
+        console.log(req.query);
         console.log(req.body);
         setTimeout(() => {
             res.sendStatus(200);

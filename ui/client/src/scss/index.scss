@@ -41,6 +41,10 @@ table {
             display: block;
             overflow: hidden;
         }
+        a {
+            color: $color-white;
+            text-decoration: none;
+        }
     }
 
     tr:nth-child(even) {
