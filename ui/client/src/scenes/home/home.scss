@@ -1,24 +1,5 @@
 @import '../../scss/variables';
 
-table {
-    border-collapse: collapse;
-    width: 80%;
-}
-
-td {
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    height: 50px;
-    background-color: $color-red;
-    color: $color-white;
-}
-
-tr:nth-child(even) {
-    background-color: $color-light-gray;
-}
-
 .license-button {
     display: inline-block;
     border-radius: 4px;

@@ -24,10 +24,10 @@ class Home extends Component {
     render() {
         return (
             <div id="parent">
-                <div id="Title">Marketplace for licensable music</div>
-                <div id="search">
-                    <input type="search" id="mySearch" name="q" />
-                    <button>Search</button>
+                <h1 id="Title">Marketplace for licensable music</h1>
+                <div className="search-box">
+                    <input type="search" />
+                    <button className="button">Search</button>
                 </div>
                 <div id="table">
                     <table class="mk-table">
@@ -144,10 +144,12 @@ class Home extends Component {
                             </div>
                         </div>
                     }
-                    actions={[{ name: 'cancel', buttonClass: 'cancel' }, { name: 'purchase', buttonClass: '' }]}
+                    actions={[{ name: 'back', buttonClass: 'cancel' }, { name: 'purchase', buttonClass: '' }]}
                     closeModal={name => {
                         if (name === 'cancel') {
                             this.setState({ purchaseModalOpen: false });
+                        } else if (name === 'back') {
+                            this.setState({ selectLicenseModalOpen: true, purchaseModalOpen: false });
                         } else if (name === 'purchase') {
                             this.setState({ purchaseModalOpen: false }); // temp
                             this.buyLicense();
