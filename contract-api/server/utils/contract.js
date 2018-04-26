@@ -161,9 +161,9 @@ class Contract {
             }
             // multi return value:
             for (const arg in result) {
-                console.log(arg, schemas[this.source.contractName][functionName].outputs)
                 result[arg] = schemas[this.source.contractName][functionName].outputs[arg].transform(result[arg]);
             }
+            
             return result;
         } catch (err) {
             console.log('Error reading from contract!', err);
