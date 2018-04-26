@@ -40,6 +40,8 @@ contract Licensor is ILicensor, Ownable {
             licensorName = _licensorName;
     }
 
+    // ------------- PUBLIC WRITES ----------------
+
     function RegisterRecording(string _isrc) public returns (uint recordingID) {
         uint recordingID = Recordings.length;
         Recording.push(
@@ -52,6 +54,43 @@ contract Licensor is ILicensor, Ownable {
         // TODO: emit event
 
         isrcToRecordings[_isrc] = recordingID;
+    }
+
+    // TODO:
+    // function RegisterRecordings(string[] _isrc) public returns (uint){}
+
+    function IssueLicense(uint _userId, uint _recordingID, uint8 _licenseType) public returns (uint licenseID){
+       uint licenseID = s.length;
+       licenses.push (
+           {
+            licenseID: licenseID,
+            userId: _userId,
+            recordingID: _recordingID,
+            status: LicenseStatus.PURCHASED
+           }
+        );
+        // TODO: emit event
+
+        Recordings[_recordingID].s.push(licenseID);
+        Recording.licensesCount++;
+    }
+
+    // TODO:
+    // function LinkToLicense(string _videoID, uint _licenseID) public returns (bool){}
+
+    // TODO:
+    // function RevokeLicense(uint _licenseID) public returns (bool){}
+
+    // ------------- PUBLIC READS ----------------
+    
+    function GetLicense(uint _licenseID) constant public returns (string, uint, uint, uint8){
+        Recording memory lic = Licenses[_licenseID];
+        return (
+            lic.userID,
+            lic.recordingID,
+            lic.status,
+            lic.licenseType
+        );
     }
 
     function GetRecording(uint _recordingID) public returns (uint, string){
@@ -74,33 +113,9 @@ contract Licensor is ILicensor, Ownable {
     function GetRecordingByVideoId(string videoID) constant public returns (uint, string, uint, uint8){
 
     }
+
     function GetRecordingByUserId(string userId) constant public returns (uint, string, uint, uint8){
 
     }
     
-    function IssueLicense(uint _userId, uint _recordingID, uint8 _licenseType) public returns (uint licenseID){
-       uint licenseID = s.length;
-       licenses.push (
-           {
-            licenseID: licenseID,
-            userId: _userId,
-            recordingID: _recordingID,
-            status: LicenseStatus.PURCHASED
-           }
-        );
-        // TODO: emit event
-
-        Recordings[_recordingID].s.push(licenseID);
-        Recording.licensesCount++;
-    }
-
-    function GetLicense(uint _licenseID) constant public returns (string, uint, uint, uint8){
-        Recording memory lic = Licenses[_licenseID];
-        return (
-            lic.userID,
-            lic.recordingID,
-            lic.status,
-            lic.licenseType
-        );
-    }
 }
