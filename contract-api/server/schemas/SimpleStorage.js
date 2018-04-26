@@ -11,7 +11,10 @@ module.exports = {
     get: {
         inputs: {},
         outputs: {
-            retVal: {
+            0: {
+                transform: value => value,
+            },
+            1: {
                 transform: value => value,
             },
         },

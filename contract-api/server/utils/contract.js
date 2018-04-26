@@ -83,7 +83,7 @@ class Contract {
 
             // ensure function output names match up
             const schemaOutputs = Object.keys(schemas[this.source.contractName][fn.name].outputs);
-            for (const output of fn.outputs.map(output => output.name)) {
+            for (const output of fn.outputs.map((output, i) => output.name || i.toString())) {
                 if (schemaOutputs.indexOf(output) === -1) {
                     throw new Error(
                         `Missing output argument ${output || '(unnamed)'} on schema for function '${
@@ -145,7 +145,7 @@ class Contract {
     async read(functionName, args) {
         args = this.transformInputArgs(functionName, args);
         // read from the runtime net
-        const web3MainNet = new web3(new web3.providers.HttpProvider(constants.networks.runtime.endpoint));
+        const web3MainNet = new web3(new web3.providers.HttpProvider(constants.networks[process.env.ETHEREUM_NETWORK].endpoint));
         const contract = new web3MainNet.eth.Contract(this.source.abi, this.address);
         logger.info(`[READ] Calling ${functionName} on contract ${this.source.contractName}`.blue);
         const result = await contract.methods[functionName](...args).call({
@@ -159,6 +159,7 @@ class Contract {
         }
         // multi return value:
         for (const arg in result) {
+            console.log(arg, schemas[this.source.contractName][functionName].outputs)
             result[arg] = schemas[this.source.contractName][functionName].outputs[arg].transform(result[arg]);
         }
         return result;
