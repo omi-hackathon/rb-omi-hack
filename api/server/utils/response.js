@@ -19,9 +19,7 @@ module.exports = class Response {
         for (const key in this.headers) {
             res.set(key.toLowerCase(), this.headers[key]);
         }
-        if (this.payload === undefined || this.payload.content === undefined) {
-            return res.send(this.payload);
-        }
+        return res.send(this.payload);
     }
 
     // 2XX  SUCCESS
@@ -75,21 +73,5 @@ module.exports = class Response {
     }
     static ServiceUnavailable(payload) {
         return new Response(503, { 'Content-Type': 'application/json' }, payload);
-    }
-
-    // MISC
-    static Resource(name,content,mime,charset) {
-        return new Response(200,
-            {
-                'Content-Type' : mime,
-                'Content-Length' : Buffer.byteLength(content),
-                'Content-disposition': 'attachment; filename='+name
-            },
-            {
-                name,
-                content,
-                charset: (charset || 'utf8')
-            }
-        );
     }
 };

@@ -1,10 +1,11 @@
 {
-	"name": "creator-tip-dapp-ui-server",
+	"name": "rb-omi-hack-ui-server",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
 		"body-parser": "^1.18.2",
 		"compression": "^1.7.1",
+		"dotenv": "^5.0.1",
 		"eslint": "^4.13.1",
 		"eslint-plugin-import": "^2.8.0",
 		"express": "^4.16.2",
@@ -14,7 +15,6 @@
 		"path": "^0.12.7",
 		"request": "^2.83.0",
 		"request-promise": "^4.2.2",
-		"webpack": "^4.6.0",
 		"winston": "^2.4.0"
 	},
 	"scripts": {
@@ -24,6 +24,6 @@
 		"start": "sh scripts/start.sh",
 		"stop": "bash scripts/stop.sh",
 		"build:reload": "yarn install && cd client && yarn run build && yarn run build:watch",
-		"start:reload": "concurrently \"yarn run build:reload\" \"nodemon --watch client/dist --watch server server/index.js --local\""
+		"start:reload": "concurrently \"yarn run build:reload\" \"nodemon --watch client/dist --watch server server/index.js\""
 	}
 }
