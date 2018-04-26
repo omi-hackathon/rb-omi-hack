@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './home.scss';
+import loadImage from 'utils/load-image';
 import SelectLicenseModal from 'components/select-license-modal/select-license-modal';
 import PurchaseModal from 'components/purchase-modal/purchase-modal';
 
@@ -7,14 +8,19 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedLicense: null,
             selectLicenseModalOpen: false,
             purchaseModalOpen: false,
+            paymentAmount: 0,
         };
     }
 
-    selectLicense(type) {}
+    selectLicense(licenseType, paymentAmount) {
+        this.setState({ paymentAmount, licenseType, selectLicenseModalOpen: false, purchaseModalOpen: true });
+    }
 
     buyLicense() {}
+
     render() {
         return (
             <div id="parent">
@@ -69,11 +75,9 @@ class Home extends Component {
                                 <td class="genre-td"> Rock </td>
                                 <td class="mood-td"> Action </td>
                                 <td class="license-td">
-                                    {' '}
                                     <button className="license-button">
-                                        {' '}
-                                        <span> License </span>{' '}
-                                    </button>{' '}
+                                        <span> License </span>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -97,7 +101,7 @@ class Home extends Component {
                                     </ul>
                                     <button
                                         className="button button-license"
-                                        onClick={() => this.action('purchase-standard')}>
+                                        onClick={() => this.selectLicense('standard', '1.99')}>
                                         Purchase
                                     </button>
                                 </div>
@@ -111,7 +115,7 @@ class Home extends Component {
                                     </ul>
                                     <button
                                         className="button button-license"
-                                        onClick={() => this.action('purchase-advanced')}>
+                                        onClick={() => this.selectLicense('advanced', '29.99')}>
                                         Purchase
                                     </button>
                                 </div>
@@ -119,13 +123,8 @@ class Home extends Component {
                         </div>
                     }
                     actions={[]} //{ name: 'cancel', buttonClass: 'cancel' }, { name: 'buy', buttonClass: '' }
-                    closeModal={name => {
-                        if (name === 'cancel') {
-                            this.setState({ selectLicenseModalOpen: false });
-                        } else if (name === 'buy') {
-                            this.setState({ selectLicenseModalOpen: false }); // temp
-                            this.buyLicense();
-                        }
+                    closeModal={() => {
+                        this.setState({ selectLicenseModalOpen: false });
                     }}
                 />
                 <PurchaseModal
@@ -133,9 +132,16 @@ class Home extends Component {
                     title="Verify your payment information"
                     content={
                         <div>
-                            <div className="card-details">
-                                <img src="http://chittagongit.com//images/paypal-credit-card-icon/paypal-credit-card-icon-11.jpg" />
-                                <p>xxxx-xxxx-xxxx-xxxx</p>
+                            <div className="payment-details">
+                                <img src={loadImage('card-icon.jpg')} />
+                                <h4>Payment Amount</h4>
+                                <p className="code">€{this.state.paymentAmount}</p>
+                                <h4>Credit Card Number</h4>
+                                <p className="code">xxxx-xxxx-xxxx-xxxx</p>
+                                <h4>Expiration Date</h4>
+                                <p className="code">07/20</p>
+                                <h4>Carholder Name</h4>
+                                <p className="code">John Doe</p>
                             </div>
                         </div>
                     }

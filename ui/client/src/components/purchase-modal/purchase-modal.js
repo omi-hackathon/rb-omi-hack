@@ -16,7 +16,7 @@ class PurchaseModal extends React.Component {
         const { title, content, actions } = this.props;
         return (
             <Modal
-                portalClassName="select-license-modal"
+                portalClassName="purchase-modal"
                 isOpen={this.props.isOpen}
                 closeTimeoutMS={300}
                 parentSelector={() => document.querySelector('#root')}
