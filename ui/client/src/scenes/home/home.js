@@ -49,9 +49,7 @@ class Home extends Component {
                     <table className="mk-table">
                         <thead>
                             <tr>
-                                {Object.keys(this.state.recordings.map(r => (
-                                    <th>{r}</th>
-                                ))}
+                                {Object.keys(this.state.recordings.map(r => <th key={r}>{r}</th>))}
                                 <th />
                             </tr>
                         </thead>
