@@ -1,4 +1,5 @@
 pragma solidity ^0.4.19;
+pragma experimental ABIEncoderV2;
 
 import "./ILicensor.sol";
 import "./Ownable.sol";
@@ -13,6 +14,9 @@ contract Licensor is ILicensor, Ownable {
         string isrc;
     }
         
+    enum LicenseStatus { PURCHASED, LINKED, REVOKED, EXPIRED }
+    enum LicenseType { NONCOMMERCIAL, COMMERCIAL }
+
     struct License {
         uint licenseID;
         string userID;
@@ -22,114 +26,116 @@ contract Licensor is ILicensor, Ownable {
         string videoID;
     }
 
-    enum LicenseStatus { PURCHASED, LINKED, REVOKED, EXPIRED }
-    enum LicenseType { NONCOMMERCIAL, COMMERCIAL }
+    // isrc to recordingID
+    mapping (string => uint) isrcToRecordingID;
+    
+    // array of Recordings indexed by their ID
+    Recording[] recordings; 
 
-    mapping (string => uint) isrcToRecordings; //isrc to recordingID
-    // recordingIDs to Recordings
-    Recording[] Recordings;
-    // licenseIDs to Licenses
-    License[] Licenses;
-    // userID to Licenses
-    mapping (string => License) userIDToLicenses;
-    // videoID to Licenses
-    mapping (string => License) videoIDtoLicenses;
+    // array of Licenses indexed by their ID
+    License[] licenses;
 
-    function Licensor(string _omiEndpointURL, string _licensorName) public {
-            omiEndpoint = _omiEndpointURL;
-            licensorName = _licensorName;
+    // userID to LicensesIDs
+    mapping (string => uint[]) userIDToLicenseIDs;
+
+    // videoID to LicenseIDs
+    mapping (string => uint[]) videoIDtoLicenseIDs;
+
+    constructor(string _omiEndpointURL, string _licensorName) public {
+        omiEndpoint = _omiEndpointURL;
+        licensorName = _licensorName;
     }
 
     // ------------- PUBLIC WRITES ----------------
 
-    function RegisterRecording(string _isrc) public returns (uint recordingID) {
-        uint recordingID = Recordings.length;
-        Recording.push(
-            {
+    function RegisterRecordings(string[] _isrcs) public onlyOwner returns (uint) {
+        uint recordingID = recordings.length;
+        for (uint i = 0; i < _isrcs.length; i++) {
+            Recording memory r = Recording({
                 recordingID: recordingID,
-                isrc: _isrc
-            }
-        );
-
-        // TODO: emit event
-
-        isrcToRecordings[_isrc] = recordingID;
+                isrc: _isrcs[i]
+            });
+            recordings.push(r);
+            isrcToRecordingID[_isrcs[i]] = recordingID;
+            recordingID++;
+        }
     }
-
-    // TODO:
-    // function RegisterRecordings(string[] _isrc) public onlyOwner returns (uint){}
-
-    function IssueLicense(uint _userID, uint _recordingID, uint8 _licenseType) public onlyOwner returns (uint licenseID){
-       uint licenseID = s.length;
-       licenses.push (
-           {
+    
+    function IssueLicense(string _userID, uint _recordingID, uint8 _licenseType) public onlyOwner returns (uint) {
+        uint licenseID = licenses.length;
+        License memory l = License({
             licenseID: licenseID,
             userID: _userID,
             recordingID: _recordingID,
-            status: LicenseStatus.PURCHASED
-           }
-        );
-        // TODO: emit event
-
-        Recordings[_recordingID].s.push(licenseID);
-        Recording.licensesCount++;
+            status: uint8(LicenseStatus.PURCHASED),
+            licenseType: _licenseType,
+            videoId: ""
+        });
+        licenses.push(l);
+        userIDToLicenseIDs[_userID].push(licenseID);
+        
+        return licenseID;
     }
 
-    // TODO:
-    // function LinkToLicense(string _videoID, uint _licenseID) public onlyOwner returns (bool){}
+    function LinkToLicense(string _videoID, uint _licenseID) public onlyOwner {
+        videoIDtoLicenseIDs[_videoID].push(_licenseID);
+    }
 
-    // TODO:
-    // function RevokeLicense(uint _licenseID) public onlyOwner returns (bool){}
+    function RevokeLicense(uint _licenseID) public onlyOwner {
+        licenses[_licenseID].status = uint8(LicenseStatus.REVOKED);
+    }
 
     // ------------- PUBLIC READS ----------------
-    
-    function GetLicense(uint _licenseID) constant public returns (string, uint, uint, uint8){
-        Recording memory lic = Licenses[_licenseID];
+
+    function GetLicense(uint _licenseID) constant public returns (uint, string, uint, uint8, uint8, string) {
+        License memory l = licenses[_licenseID];
         return (
-            lic.userID,
-            lic.recordingID,
-            lic.status,
-            lic.licenseType
+            l.licenseID,
+            l.userID,
+            l.recordingID,
+            l.status,
+            l.licenseType,
+            l.videoID
         );
     }
 
-    function GetRecording(uint _recordingID) public returns (uint, string){
-        Recording memory rec = Recordings[_recordingID];
+    function GetRecording(uint _recordingID) constant public returns (uint, string) {
+        Recording memory r = recordings[_recordingID];
         return (
-            rec.recordingID,
-            rec.isrc
+            r.recordingID,
+            r.isrc
         );
     }
      
-    function GetRecordingByISRC(string _isrc) public returns (uint, string, uint, uint8){
-       return (
-            isrcToRecordings[_isrc].recordingID,
-            isrcToRecordings[_isrc].isrc,
-            isrcToRecordings[_isrc].licensorID,
-            isrcToRecordings[_isrc].internalID
-        );
-    }
-
-    function GetLicenseByVideoID(string _videoID) constant public returns (uint, string, uint, uint8){
-        License memory lic = videoIDToLicenses[_videoID];
+    function GetRecordingByISRC(string _isrc) constant public returns (uint, string) {
+        Recording memory r = recordings[isrcToRecordingID[_isrc]];
         return (
-            lic.licenseID,
-            lic.userID,
-            lic.recordingID,
-            lic.status,
-            lic.licenseType
+            r.recordingID,
+            r.isrc
         );
     }
 
-    function GetLicenseByUserID(string _userID) constant public returns (uint, string, uint, uint8){
-        License memory lic = userIDToLicenses[_userID];
-        return ( 
-            lic.licenseID,
-            lic.userID,
-            lic.recordingID,
-            lic.status,
-            lic.licenseType       
+    function GetLicenseByVideoID(string _videoID) constant public returns (uint, string, uint, uint8, uint8, string)  {
+        License memory l = licenses[videoIDtoLicenseIDs[_videoID]];
+        return (
+            l.licenseID,
+            l.userID,
+            l.recordingID,
+            l.status,
+            l.licenseType,
+            l.videoID
         );
     }
-    
+
+    function GetLicenseByUserID(string _userID) constant public returns (uint, string, uint, uint8, uint8, string)  {
+        License memory l = licenses[userIDToLicenseIDs[_userID]];
+        return (
+            l.licenseID,
+            l.userID,
+            l.recordingID,
+            l.status,
+            l.licenseType,
+            l.videoID    
+        );
+    }
 }
