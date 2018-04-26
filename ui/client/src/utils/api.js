@@ -13,7 +13,7 @@ class API {
         return axios
             .request({
                 method,
-                url: `/api/${url}`,
+                url: `http://localhost:3000/v1/${url}`,
                 params,
                 data,
                 headers: Object.assign(this.headers, {
@@ -31,19 +31,21 @@ class API {
     }
 
     getLicenses() {
-        return this.request('GET', 'licenses');
+        return this.request('GET', 'licenses', {
+            userID: window.GoogleAuth.currentUser.get().El || window.GoogleAuth.currentUser.get().Eea
+        });
     }
 
     buyLicense(userID, ISRC, licenseType) {
-        return this.request('POST', 'license/purchase', null, {
+        return this.request('POST', 'licenses/purchase', null, {
             userID,
             ISRC,
             licenseType,
         });
     }
 
-    linkVideo(licenseID, videoID) {
-        return this.request('POST', `license/${licenseID}/link`, null, {
+    linkVideo(videoID, licenseID) {
+        return this.request('POST', `licenses/${licenseID}/link`, null, {
             videoID,
         });
     }

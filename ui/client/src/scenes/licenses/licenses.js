@@ -11,6 +11,7 @@ class Licenses extends Component {
             license: null,
             linkModalOpen: false,
             licenses: [{}],
+            videoToLink: ''
         };
         this.getLicenses = this.getLicenses.bind(this);
     }
@@ -27,6 +28,11 @@ class Licenses extends Component {
             console.error(err);
         }
     }
+
+    async linkVideo(videoID, licenseID) {
+        await api.linkVideo(videoID, licenseID);
+    }
+
     render() {
         return (
             <div id="parent">
@@ -63,7 +69,7 @@ class Licenses extends Component {
                                                 ) : (
                                                     <button
                                                         className="link-button"
-                                                        onClick={() => this.setState({ linkModalOpen: true })}>
+                                                        onClick={() => this.setState({ linkModalOpen: true, license })}>
                                                         <span> Link Video </span>
                                                     </button>
                                                 )}
@@ -84,7 +90,11 @@ class Licenses extends Component {
                         <div>
                             <div className="link-content">
                                 <h4>YouTube Video Link or ID</h4>
-                                <input type="text" />
+                                <input
+                                    type="text"
+                                    value={this.state.videoToLink || ''}
+                                    onChange={e => this.setState({ videoToLink: e.target.value })}
+                                />
                             </div>
                         </div>
                     }
@@ -92,6 +102,9 @@ class Licenses extends Component {
                     closeModal={name => {
                         if (name === 'cancel') {
                             this.setState({ linkModalOpen: false });
+                        } else if (name === 'Link') {
+                            this.setState({ linkModalOpen: false });
+                            this.linkVideo(this.state.videoToLink, this.state.license.licenseID); 
                         }
                     }}
                 />

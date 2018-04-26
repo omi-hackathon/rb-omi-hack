@@ -50,6 +50,11 @@ module.exports = function() {
 
     router.route('/:licenseID/link').post(async (req, res) => {
         try {
+            console.log(req.params);
+            console.log('HERE', {
+                _videoID: req.body.videoID,
+                _licenseID: req.params.licenseID,
+            })
             await axios.post(`/LinkToLicense`, {
                 _videoID: req.body.videoID,
                 _licenseID: Number(req.params.licenseID),
