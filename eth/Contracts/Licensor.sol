@@ -87,6 +87,8 @@ contract Licensor is ILicensor, Ownable {
     }
 
     function LinkToLicense(string _videoID, uint _licenseID) public onlyOwner {
+        require(licenses.length + 1 >= _licenseID);
+        require(licenses[_licenseID].status == uint(LicenseStatus.PURCHASED));
         if(videoIDtoLicenseIDs[_videoID] == 0){
             videoIDtoLicenseIDs[_videoID] = [];
         }
