@@ -30,24 +30,21 @@ class API {
         return this.request('GET', 'recordings');
     }
 
-    postUser(user) {
-        return this.request('POST', 'users', null, {
-            user,
+    getLicenses() {
+        return this.request('GET', 'licenses');
+    }
+
+    buyLicense(userID, ISRC, licenseType) {
+        return this.request('POST', 'license/purchase', null, {
+            userID,
+            ISRC,
+            licenseType,
         });
     }
 
-    buyLicense(user_id, isrc) {
-        return this.request('POST', 'videos/buy', null, {
-            user_id,
-            isrc,
-        });
-    }
-
-    registerVideo(user_id, link, license_id) {
-        return this.request('POST', 'videos/register', null, {
-            user_id,
-            link,
-            license_id,
+    linkVideo(licenseID, videoID) {
+        return this.request('POST', `license/${licenseID}/link`, null, {
+            videoID,
         });
     }
 }

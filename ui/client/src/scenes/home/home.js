@@ -11,6 +11,7 @@ class Home extends Component {
         this.state = {
             recordings: [{}],
             isrc: null,
+            licenseType: 0,
             selectedLicense: null,
             selectLicenseModalOpen: false,
             purchaseModalOpen: false,
@@ -33,7 +34,12 @@ class Home extends Component {
     }
 
     selectLicense(licenseType, paymentAmount) {
-        this.setState({ paymentAmount, licenseType, selectLicenseModalOpen: false, purchaseModalOpen: true });
+        this.setState({
+            paymentAmount,
+            licenseType,
+            selectLicenseModalOpen: false,
+            purchaseModalOpen: true,
+        });
     }
 
     buyLicense() {}
@@ -42,40 +48,49 @@ class Home extends Component {
         return (
             <div id="parent">
                 <h1 id="Title">Marketplace for licensable music</h1>
-                <div className="search-box">
-                    <input type="search" />
-                    <button className="button">Search</button>
-                </div>
-                <div id="table">
-                    <table className="mk-table">
-                        <thead>
-                            <tr>
-                                {Object.keys(this.state.recordings[0]).map(r => <th key={r}>{r}</th>)}
-                                <th />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.recordings.map(recording => (
-                                <tr key={recording.isrc}>
-                                    {Object.keys(recording).map(prop => (
-                                        <td key={prop}>
-                                            <span>{recording[prop]}</span>
-                                        </td>
+                {this.state.recordings.length > 0 ? (
+                    <div>
+                        <div className="search-box">
+                            <input type="search" />
+                            <button className="button">Search</button>
+                        </div>
+                        <div id="table">
+                            <table className="mk-table">
+                                <thead>
+                                    <tr>
+                                        {Object.keys(this.state.recordings[0]).map(r => <th key={r}>{r}</th>)}
+                                        <th key="button" />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.recordings.map(recording => (
+                                        <tr key={recording.isrc}>
+                                            {Object.keys(recording).map(prop => (
+                                                <td key={prop}>
+                                                    <span>{recording[prop]}</span>
+                                                </td>
+                                            ))}
+                                            <td>
+                                                <button
+                                                    className="license-button"
+                                                    onClick={() =>
+                                                        this.setState({
+                                                            selectLicenseModalOpen: true,
+                                                            isrc: recording.isrc,
+                                                        })
+                                                    }>
+                                                    <span> Purchase </span>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     ))}
-                                    <td>
-                                        <button
-                                            className="license-button"
-                                            onClick={() =>
-                                                this.setState({ selectLicenseModalOpen: true, isrc: recording.isrc })
-                                            }>
-                                            <span> Purchase </span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                ) : (
+                    <p>You have not purchased any license yet.</p>
+                )}
                 <SelectLicenseModal
                     isOpen={this.state.selectLicenseModalOpen}
                     title="Select the license you want to buy"
@@ -93,7 +108,7 @@ class Home extends Component {
                                     </ul>
                                     <button
                                         className="button button-license"
-                                        onClick={() => this.selectLicense('standard', '1.99')}>
+                                        onClick={() => this.selectLicense(0, '1.99')}>
                                         Purchase
                                     </button>
                                 </div>
@@ -107,7 +122,7 @@ class Home extends Component {
                                     </ul>
                                     <button
                                         className="button button-license"
-                                        onClick={() => this.selectLicense('advanced', '29.99')}>
+                                        onClick={() => this.selectLicense(1, '29.99')}>
                                         Purchase
                                     </button>
                                 </div>
@@ -137,6 +152,8 @@ class Home extends Component {
                             </div>
                         </div>
                     }
+                    licenseType={this.state.licenseType}
+                    isrc={this.state.isrc}
                     actions={[{ name: 'back', buttonClass: 'cancel' }, { name: 'purchase', buttonClass: '' }]}
                     closeModal={name => {
                         if (name === 'cancel') {
