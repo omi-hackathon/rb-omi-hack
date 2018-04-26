@@ -30,10 +30,8 @@ class API {
         return this.request('GET', 'recordings');
     }
 
-    postUser(user) {
-        return this.request('POST', 'users', null, {
-            user,
-        });
+    getLicenses() {
+        return this.request('GET', 'licenses');
     }
 
     buyLicense(user_id, isrc) {

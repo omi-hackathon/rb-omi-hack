@@ -1,66 +1,82 @@
 import React, { Component } from 'react';
-import './licenses.scss';
+import api from '../../utils/api';
+import { Link, withRouter } from 'react-router-dom';
 import LinkModal from 'components/link-modal/link-modal';
+import './licenses.scss';
 
 class Licenses extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            license: null,
             linkModalOpen: false,
+            licenses: [{}],
         };
+        this.getLicenses = this.getLicenses.bind(this);
+    }
+
+    componentDidMount() {
+        this.getLicenses();
+    }
+
+    async getLicenses() {
+        try {
+            const licenses = await api.getLicenses();
+            this.setState({ licenses });
+        } catch (err) {
+            console.error(err);
+        }
     }
     render() {
         return (
             <div id="parent">
                 <h1 id="Title">Your licenses</h1>
-                <div className="search-box">
-                    <input type="search" />
-                    <button className="button">Search</button>
-                </div>
-                <div id="table">
-                    <table className="mk-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Artist</th>
-                                <th>Duration</th>
-                                <th>Genre</th>
-                                <th>Mood</th>
-                                <th />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className="title-td"> ABC </td>
-                                <td className="artist-td"> Mike </td>
-                                <td className="duration-td"> 3:10 </td>
-                                <td className="genre-td"> Ambient </td>
-                                <td className="mood-td"> Calm </td>
-                                <td className="license-td">
-                                    <button
-                                        className="link-button"
-                                        onClick={() => this.setState({ linkModalOpen: true })}>
-                                        <span> Link Video </span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="title-td"> DEF </td>
-                                <td className="artist-td"> Stephen </td>
-                                <td className="duration-td"> 2:34 </td>
-                                <td className="genre-td"> Electronic </td>
-                                <td className="mood-td"> Cinematic </td>
-                                <td className="license-td">
-                                    <button
-                                        className="see-button"
-                                        onClick={() => this.setState({ linkModalOpen: true })}>
-                                        <span> See Video </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                {this.state.licenses.length > 0 ? (
+                    <div>
+                        <div className="search-box">
+                            <input type="search" />
+                            <button className="button">Search</button>
+                        </div>
+                        <div id="table">
+                            <table className="mk-table">
+                                <thead>
+                                    <tr>
+                                        {Object.keys(this.state.licenses[0]).map(r => <th key={r}>{r}</th>)}
+                                        <th />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.licenses.map(license => (
+                                        <tr key={license.isrc}>
+                                            {Object.keys(license).map(prop => (
+                                                <td key={prop}>
+                                                    <span>{license[prop]}</span>
+                                                </td>
+                                            ))}
+                                            <td>
+                                                {license.link ? (
+                                                    <button className="see-button">
+                                                        <Link to={license.link} target="_blank">
+                                                            See Video
+                                                        </Link>
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        className="link-button"
+                                                        onClick={() => this.setState({ linkModalOpen: true })}>
+                                                        <span> Link Video </span>
+                                                    </button>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                ) : (
+                    <p>You have not purchased any license yet.</p>
+                )}
                 <LinkModal
                     isOpen={this.state.linkModalOpen}
                     title="Link a YouTube video"
