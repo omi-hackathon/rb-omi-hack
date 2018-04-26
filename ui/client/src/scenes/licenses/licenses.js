@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import './licenses.scss';
+import LinkModal from 'components/link-modal/link-modal';
 
 class Licenses extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            linkModalOpen: false,
+        };
+    }
     render() {
         return (
             <div id="parent">
@@ -14,8 +21,12 @@ class Licenses extends Component {
                     <table className="mk-table">
                         <thead>
                             <tr>
-                                <th> Title </th> <th> Artist </th> <th> Duration </th> <th> Genre </th> <th> Mood </th>
-                                <th> </th>
+                                <th>Title</th>
+                                <th>Artist</th>
+                                <th>Duration</th>
+                                <th>Genre</th>
+                                <th>Mood</th>
+                                <th />
                             </tr>
                         </thead>
                         <tbody>
@@ -26,7 +37,9 @@ class Licenses extends Component {
                                 <td className="genre-td"> Ambient </td>
                                 <td className="mood-td"> Calm </td>
                                 <td className="license-td">
-                                    <button className="link-button">
+                                    <button
+                                        className="link-button"
+                                        onClick={() => this.setState({ linkModalOpen: true })}>
                                         <span> Link Video </span>
                                     </button>
                                 </td>
@@ -38,7 +51,9 @@ class Licenses extends Component {
                                 <td className="genre-td"> Electronic </td>
                                 <td className="mood-td"> Cinematic </td>
                                 <td className="license-td">
-                                    <button className="see-button">
+                                    <button
+                                        className="see-button"
+                                        onClick={() => this.setState({ linkModalOpen: true })}>
                                         <span> See Video </span>
                                     </button>
                                 </td>
@@ -46,6 +61,24 @@ class Licenses extends Component {
                         </tbody>
                     </table>
                 </div>
+                <LinkModal
+                    isOpen={this.state.linkModalOpen}
+                    title="Link a YouTube video"
+                    content={
+                        <div>
+                            <div className="link-content">
+                                <h4>YouTube Video Link or ID</h4>
+                                <input type="text" />
+                            </div>
+                        </div>
+                    }
+                    actions={[{ name: 'back', buttonClass: 'cancel' }, { name: 'Link', buttonClass: '' }]}
+                    closeModal={name => {
+                        if (name === 'cancel') {
+                            this.setState({ linkModalOpen: false });
+                        }
+                    }}
+                />
             </div>
         );
     }

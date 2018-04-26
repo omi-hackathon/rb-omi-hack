@@ -30,21 +30,25 @@ class Home extends Component {
                     <button className="button">Search</button>
                 </div>
                 <div id="table">
-                    <table class="mk-table">
+                    <table className="mk-table">
                         <thead>
                             <tr>
-                                <th> Title </th> <th> Artist </th> <th> Duration </th> <th> Genre </th> <th> Mood </th>
-                                <th> </th>
+                                <th>Title</th>
+                                <th>Artist</th>
+                                <th>Duration</th>
+                                <th>Genre</th>
+                                <th>Mood</th>
+                                <th />
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="title-td"> ABC </td>
-                                <td class="artist-td"> Mike </td>
-                                <td class="duration-td"> 3:10 </td>
-                                <td class="genre-td"> Ambient </td>
-                                <td class="mood-td"> Calm </td>
-                                <td class="license-td">
+                                <td className="title-td"> ABC </td>
+                                <td className="artist-td"> Mike </td>
+                                <td className="duration-td"> 3:10 </td>
+                                <td className="genre-td"> Ambient </td>
+                                <td className="mood-td"> Calm </td>
+                                <td className="license-td">
                                     <button
                                         className="license-button"
                                         onClick={() => this.setState({ selectLicenseModalOpen: true })}>
@@ -53,12 +57,12 @@ class Home extends Component {
                                 </td>
                             </tr>
                             <tr>
-                                <td class="title-td"> DEF </td>
-                                <td class="artist-td"> Stephen </td>
-                                <td class="duration-td"> 2:34 </td>
-                                <td class="genre-td"> Electronic </td>
-                                <td class="mood-td"> Cinematic </td>
-                                <td class="license-td">
+                                <td className="title-td"> DEF </td>
+                                <td className="artist-td"> Stephen </td>
+                                <td className="duration-td"> 2:34 </td>
+                                <td className="genre-td"> Electronic </td>
+                                <td className="mood-td"> Cinematic </td>
+                                <td className="license-td">
                                     <button
                                         className="license-button"
                                         onClick={() => this.setState({ selectLicenseModalOpen: true })}>
@@ -67,12 +71,12 @@ class Home extends Component {
                                 </td>
                             </tr>
                             <tr>
-                                <td class="title-td"> GHI </td>
-                                <td class="artist-td"> Ursi </td>
-                                <td class="duration-td"> 1:20 </td>
-                                <td class="genre-td"> Rock </td>
-                                <td class="mood-td"> Action </td>
-                                <td class="license-td">
+                                <td className="title-td"> GHI </td>
+                                <td className="artist-td"> Ursi </td>
+                                <td className="duration-td"> 1:20 </td>
+                                <td className="genre-td"> Rock </td>
+                                <td className="mood-td"> Action </td>
+                                <td className="license-td">
                                     <button
                                         className="license-button"
                                         onClick={() => this.setState({ selectLicenseModalOpen: true })}>

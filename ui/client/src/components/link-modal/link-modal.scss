@@ -1,0 +1,28 @@
+@import '../../scss/variables';
+
+.link-modal .modal-overlay .modal {
+    max-width: 350px;
+
+    .modal__content {
+        background-color: #fff;
+        padding: 0 $spacing-s;
+
+        > p {
+            line-height: 150%;
+        }
+
+        .link-content {
+            h4 {
+                margin-bottom: 8px;
+            }
+
+            input {
+                width: 100%;
+                height: 32px;
+                border-radius: 2px;
+                border: 1px solid $color-light-gray;
+                padding: 0 2px;
+            }
+        }
+    }
+}
