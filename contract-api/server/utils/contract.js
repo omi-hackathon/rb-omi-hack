@@ -143,26 +143,31 @@ class Contract {
     }
 
     async read(functionName, args) {
-        args = this.transformInputArgs(functionName, args);
-        // read from the runtime net
-        const web3MainNet = new web3(new web3.providers.HttpProvider(constants.networks[process.env.ETHEREUM_NETWORK].endpoint));
-        const contract = new web3MainNet.eth.Contract(this.source.abi, this.address);
-        logger.info(`[READ] Calling ${functionName} on contract ${this.source.contractName}`.blue);
-        const result = await contract.methods[functionName](...args).call({
-            from: this.owner.address,
-        });
+        try {
+            args = this.transformInputArgs(functionName, args);
+            // read from the runtime net
+            const web3MainNet = new web3(new web3.providers.HttpProvider(constants.networks[process.env.ETHEREUM_NETWORK].endpoint));
+            const contract = new web3MainNet.eth.Contract(this.source.abi, this.address);
+            console.log(`[READ] Calling ${functionName} on contract ${this.source.contractName}`);
+            const result = await contract.methods[functionName](...args).call({
+                from: this.owner.address,
+            });
+            console.log('Call succeeded. Result:', result);
 
-        // transform result according to schema
-        // single return value:
-        if (Object.keys(schemas[this.source.contractName][functionName].outputs).length === 1) {
-            return Object.values(schemas[this.source.contractName][functionName].outputs)[0].transform(result);
+            // transform result according to schema
+            // single return value:
+            if (Object.keys(schemas[this.source.contractName][functionName].outputs).length === 1) {
+                return Object.values(schemas[this.source.contractName][functionName].outputs)[0].transform(result);
+            }
+            // multi return value:
+            for (const arg in result) {
+                console.log(arg, schemas[this.source.contractName][functionName].outputs)
+                result[arg] = schemas[this.source.contractName][functionName].outputs[arg].transform(result[arg]);
+            }
+            return result;
+        } catch (err) {
+            console.log('Error reading from contract!', err);
         }
-        // multi return value:
-        for (const arg in result) {
-            console.log(arg, schemas[this.source.contractName][functionName].outputs)
-            result[arg] = schemas[this.source.contractName][functionName].outputs[arg].transform(result[arg]);
-        }
-        return result;
     }
 
     async write(functionName, args) {
@@ -173,24 +178,31 @@ class Contract {
             new web3.providers.HttpProvider(constants.networks[process.env.ETHEREUM_NETWORK].endpoint),
         );
         const contract = new web3MainNet.eth.Contract(this.source.abi, this.address);
-
-        logger.info(`[WRITE] Calling ${functionName} on contract ${this.source.contractName}`.blue);
+        
+        console.log(`[WRITE] Calling ${functionName} on contract ${this.source.contractName}`);
         await web3MainNet.eth.personal.unlockAccount(this.owner.address, this.owner.password, null);
+        console.log('Account unlocked...');
+        const gasAmount = await contract.methods[functionName](...args).estimateGas({ from: this.owner.address });
+        console.log('Estimated gas: ', gasAmount, '... actually sending:', {
+            gas: Math.ceil(gasAmount * 2),
+            gasPrice: 100000000000
+        });
 
         const receipt = await contract.methods[functionName](...args).send({
             from: this.owner.address,
-            gas: 4500000,
+            gas: Math.ceil(gasAmount * 2) || 7000000,
+            gasPrice: 1000000000000
         });
 
-        logger.info(`[WRITE] Transaction receipt:`.blue, receipt);
+        console.log(`[WRITE] Transaction receipt:`, receipt);
 
-        logger.info(
+        console.log(
             `Call succeeded, gas used in tx: ${receipt.gasUsed} (approx. $${Math.round(
                 receipt.gasUsed * 20e-9 * 440 * 100,
             ) / 100})`,
         );
 
-        return { receipt, txId: id.id };
+        return { receipt };
     }
 }
 

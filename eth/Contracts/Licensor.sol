@@ -50,19 +50,16 @@ contract Licensor is ILicensor, Ownable {
 
     // ------------- PUBLIC WRITES ----------------
 
-    function RegisterRecordings(string[] _isrcs) public onlyOwner returns (uint) {
-        require(_isrcs.length > 0);
+    function RegisterRecording(string _isrc) public onlyOwner returns (uint) {
         uint recordingID = recordings.length;
-        for (uint i = 0; i < _isrcs.length; i++) {
-            //require(isrcToRecordingID[_isrc] == 0);
-            Recording memory r = Recording({
-                recordingID: recordingID,
-                isrc: _isrcs[i]
-            });
-            recordings.push(r);
-            isrcToRecordingID[_isrcs[i]] = recordingID;
-            recordingID++;
-        }
+        Recording memory r = Recording({
+            recordingID: recordingID,
+            isrc: _isrc
+        });
+        recordings.push(r);
+        isrcToRecordingID[_isrc] = recordingID;
+
+        return recordingID;
     }
     
     function IssueLicense(string _userID, uint _recordingID, uint _licenseType) public onlyOwner returns (uint) {
@@ -140,7 +137,11 @@ contract Licensor is ILicensor, Ownable {
         require(ls.length > 0);
         string memory s = "";
         for (uint i = 0; i < ls.length; i++) {
-            s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[0]));
+            if (i != 0) {
+                s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[i]));
+            } else {
+                s = Utils.strcat(s, Utils.uintToString(ls[i]));
+            }
         }
         return s;
     }
@@ -150,7 +151,11 @@ contract Licensor is ILicensor, Ownable {
         require(ls.length > 0);
         string memory s = "";
         for (uint i = 0; i < ls.length; i++) {
-            s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[0]));
+            if (i != 0) {
+                s = Utils.strcat(Utils.strcat(s, ","), Utils.uintToString(ls[i]));
+            } else {
+                s = Utils.strcat(s, Utils.uintToString(ls[i]));
+            }
         }
         return s;
     }

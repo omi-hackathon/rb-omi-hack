@@ -9,12 +9,12 @@ module.exports = function(options, contracts) {
         if (Object.keys(contracts).indexOf(req.params.contractName) === -1) {
             return Response.BadRequest(`Unknown contract: ${req.params.contractName}`).send(res);
         }
+        
         try {
             await contracts[req.params.contractName].validateCall(req.params.functionName, req.body);
         } catch (err) {
             return Response.BadRequest(err).send(res);
         }
-
         const result = await contracts[req.params.contractName].write(req.params.functionName, req.body);
         return Response.OK(result).send(res);
     });
@@ -30,7 +30,6 @@ module.exports = function(options, contracts) {
         } catch (err) {
             return Response.BadRequest(err).send(res);
         }
-
         const result = await contracts[req.params.contractName].read(req.params.functionName, req.query);
         return Response.OK(result).send(res);
     });
