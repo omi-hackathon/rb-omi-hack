@@ -26,8 +26,8 @@ class API {
             });
     }
 
-    getVideos() {
-        return this.request('GET', 'videos');
+    getRecordings() {
+        return this.request('GET', 'recordings');
     }
 
     postUser(user) {

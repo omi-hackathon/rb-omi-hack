@@ -1,20 +1,21 @@
 const rp = require('request-promise'); // TODO move to axios
 
-module.exports = function (app) {
+module.exports = function(app) {
     app.use('/api/*', async (req, res) => {
         if (req.method === 'OPTIONS') {
             return res.sendStatus(200);
         }
         try {
+            console.log(`http://localhost:${process.env.API_PORT}/v1/api${req.originalUrl.substr(4)}`);
             let fwdResponse = await rp({
-                uri: `http://localhost:${process.env.API_PORT}${req.originalUrl.substr(4)}`,
+                uri: `http://localhost:${process.env.API_PORT}/v1/api${req.originalUrl.substr(4)}`,
                 qs: req.query,
                 body: req.body,
                 headers: req.headers,
                 method: req.method,
                 json: true,
                 // Include headers
-                transform: (body, response) => ({'headers': response.headers, 'data': body})
+                transform: (body, response) => ({ headers: response.headers, data: body }),
             });
 
             // TODO: Find cleaner way to perform proxy forwarding
@@ -26,8 +27,8 @@ module.exports = function (app) {
                 res.end();
             }
         } catch (err) {
-            console.error('Error in UI Proxy!',err);
+            console.error('Error in UI Proxy!', err);
             return res.status(err.statusCode || 500).json(err.message);
         }
     });
-}
+};

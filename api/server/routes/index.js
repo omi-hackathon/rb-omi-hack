@@ -1,5 +1,6 @@
 const Response = require('../utils/response');
 const config = require('../config');
+const recordings = require('../data/recordings');
 const checkYoutubeToken = require('../middleware/auth').checkYoutubeToken;
 
 module.exports = function(app) {
@@ -10,12 +11,15 @@ module.exports = function(app) {
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, authorization');
         next();
+        console.log(req.originalUrl);
+    });
+
+    app.get(`/${config.api.version}/api/recordings`, (req, res) => {
+        res.json(recordings);
     });
 
     // Basic middleware to check that the provided youtube token is indeed valid
-    app.use('/api/*', checkYoutubeToken);
-
-    // TODO implement routes
+    app.use(`/${config.api.version}/api/*`, checkYoutubeToken);
 
     // Catch unknown API endpoints as 404
     app.all(`/${config.api.version}/*`, (req, res) => Response.NotFound().send(res));

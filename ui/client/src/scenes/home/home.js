@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
-import './home.scss';
+import api from '../../utils/api';
 import loadImage from 'utils/load-image';
 import SelectLicenseModal from 'components/select-license-modal/select-license-modal';
 import PurchaseModal from 'components/purchase-modal/purchase-modal';
+import './home.scss';
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            recordings: [],
             selectedLicense: null,
             selectLicenseModalOpen: false,
             purchaseModalOpen: false,
             paymentAmount: 0,
         };
+        this.getRecordings = this.getRecordings.bind(this);
+    }
+
+    componentDidMount() {
+        this.getRecordings();
+    }
+
+    async getRecordings() {
+        try {
+            const recordings = await api.getRecordings();
+            this.setState({ recordings });
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     selectLicense(licenseType, paymentAmount) {
@@ -33,11 +49,9 @@ class Home extends Component {
                     <table className="mk-table">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Artist</th>
-                                <th>Duration</th>
-                                <th>Genre</th>
-                                <th>Mood</th>
+                                {Object.keys(this.state.recordings.map(r => (
+                                    <th>{r}</th>
+                                ))}
                                 <th />
                             </tr>
                         </thead>

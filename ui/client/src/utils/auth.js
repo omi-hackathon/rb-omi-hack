@@ -3,5 +3,11 @@ export function isAuthenticated() {
 }
 
 export function getAuthHeader() {
-    return 'Bearer ' + window.GoogleAuth.currentUser.get().Zi.access_token;
+    if (window.GoogleAuth) {
+        const user = window.GoogleAuth.currentUser.get();
+        if (user) {
+            return 'Bearer ' + user.Zi.access_token;
+        }
+    }
+    return null;
 }
