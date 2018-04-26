@@ -13,6 +13,7 @@ class Header extends Component {
             redirect: false,
             showMenu: false,
         };
+        this.updateSigninStatus = this.updateSigninStatus.bind(this);
     }
 
     componentWillUnmount() {
@@ -24,7 +25,6 @@ class Header extends Component {
         window.gapi.load('client', () => {
             window.gapi.client
                 .init({
-                    //0J5EWwHy0WGuPPGxOc7PGzsH
                     apiKey: 'AIzaSyAECuUwvN4tfl9qtL1QzQjh8iZVtUAcjLc',
                     clientId: '472352541870-i5vs8e6jhjohc3dpa25tevm3r999jl6n.apps.googleusercontent.com',
                     scope: 'https://www.googleapis.com/auth/youtube',
@@ -32,29 +32,13 @@ class Header extends Component {
                 })
                 .then(async () => {
                     window.GoogleAuth = window.gapi.auth2.getAuthInstance();
-                    // console.log(GoogleAuth);
-                    // console.log(GoogleAuth.isSignedIn);
-                    // console.log(window.GoogleAuth.isSignedIn.get());
-                    // console.log(window.GoogleAuth.currentUser.get());
-                    // console.log(GoogleAuth.getInitialScopes());
-
-                    // updateSigninStatus(GoogleAuth.isSignedIn.get());
-                    // GoogleAuth.signIn();
 
                     const signedInStatus = window.GoogleAuth.isSignedIn.get();
                     console.log(signedInStatus);
                     if (signedInStatus) {
                         const user = window.GoogleAuth.currentUser.get().w3;
                         this.setState({ user, redirect: true });
-                        //await api.postUser(user);
-                        /*if (location.href.indexOf('login') > 0) {
-                            location.href = '/';
-                        }*/
                     }
-
-                    /*if (!signedInStatus && location.href.indexOf('login') < 0) {
-                        location.href = '/login';
-                    }*/
 
                     // Listen for sign-in state changes.
                     window.GoogleAuth.isSignedIn.listen(this.updateSigninStatus);
@@ -66,7 +50,7 @@ class Header extends Component {
     }
 
     handleClickOutside(e) {
-        if (this.self && !this.self.contains(e.target)) {
+        if (this.self && (!this.self.contains(e.target) || e.target.closest('.menu') !== null)) {
             this.setState({
                 showMenu: false,
             });
@@ -83,13 +67,17 @@ class Header extends Component {
         //this.setState({ redirect: true });
     }
 
-    async updateSigninStatus(isSignedIn) {
-        console.log(isSignedIn);
-        console.log('============ ', isSignedIn);
-        console.log(window.GoogleAuth.currentUser.get());
-        const user = window.GoogleAuth.currentUser.get();
-        console.log(this);
-        this.setState({ user, redirect: true });
+    logout() {
+        window.GoogleAuth.signOut();
+        this.props.logout();
+        //this.setState({ user: null });
+    }
+
+    updateSigninStatus(isSignedIn) {
+        console.log('signed in: ' + isSignedIn);
+        const user = window.GoogleAuth.currentUser.get().w3;
+        console.log(user);
+        this.setState({ user, redirect: true, showMenu: false });
     }
 
     render() {
@@ -99,37 +87,37 @@ class Header extends Component {
                 <nav>
                     <ul>
                         {isAuthenticated() && (
-                            <li>
-                                <Link to="/" onClick={e => this.showMenu(e)}>
-                                    <strong>{this.state.user.ofa}</strong>
-                                </Link>
-                                <img src={this.state.user.Paa} alt="User avatar" />
+                            <li ref={ref => (this.self = ref)}>
+                                <strong onClick={e => this.showMenu(e)}>{this.state.user.ofa}</strong>
+                                <img src={this.state.user.Paa} alt="User avatar" onClick={e => this.showMenu(e)} />
+                                <div className="menu-dock">
+                                    <div className={'menu' + (this.state.showMenu ? ' show' : '')}>
+                                        <ul>
+                                            <li>
+                                                <Link to="/licenses">View Your Licenses</Link>
+                                            </li>
+                                            <li>
+                                                <a onClick={e => this.logout(e)}>Logout</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </li>
                         )}
-                        <li>
-                            {isAuthenticated() ? (
+                        {!isAuthenticated() && (
+                            <li>
                                 <a onClick={e => this.login(e)}>
                                     <small>log in</small>
                                 </a>
-                            ) : (
-                                <a onClick={this.props.logout}>
-                                    <small>log out</small>
-                                </a>
-                            )}
-                        </li>
+                            </li>
+                        )}
                     </ul>
                 </nav>
             </header>
         );
     }
 }
-/*
-            <div className="global-header">
-                <p>OMI Hackathon</p>
-                <div className={'loader' + (this.props.visible ? ' show' : '')} />
-            </div>
-        );
-*/
+
 Header.propTypes = {
     user: PropTypes.shape({
         name: PropTypes.string,
