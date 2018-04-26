@@ -9,6 +9,6 @@ contract ILicensor {
     function GetLicense(uint _licenseID) constant public returns (uint, string, uint, uint8, uint8, string);
     function GetRecording(uint _recordingID) constant public returns (uint, string);
     function GetRecordingByISRC(string _isrc) constant public returns (uint, string);
-    function GetLicenseByVideoID(string _videoID) constant public returns (uint, string, uint, uint8);
+    function GetLicenseByVideoID(string _videoID) constant public returns (uint, string, uint, uint8, uint8, string);
     function GetLicenseByUserID(string _userID) constant public returns (uint, string, uint, uint8);
 }

@@ -65,12 +65,12 @@ contract Licensor is ILicensor, Ownable {
     function IssueLicense(string _userID, uint _recordingID, uint8 _licenseType) public onlyOwner returns (uint) {
         uint licenseID = licenses.length;
         License memory l = License({
-            l.licenseID: licenseID,
-            l.userID: _userID,
-            l.recordingID: _recordingID,
-            l.status: uint8(LicenseStatus.PURCHASED),
-            l.licenseType: _licenseType,
-            l.videoId: ""
+            licenseID: licenseID,
+            userID: _userID,
+            recordingID: _recordingID,
+            status: uint8(LicenseStatus.PURCHASED),
+            licenseType: _licenseType,
+            videoId: ""
         });
         licenses.push(l);
         userIDToLicenseIDs[_userID].push(licenseID);
