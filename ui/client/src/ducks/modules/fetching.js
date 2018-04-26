@@ -7,6 +7,8 @@ const START_FETCH_USER = 'START_FETCH_USER';
 const STOP_FETCH_USER = 'STOP_FETCH_USER';
 const USER_LOGIN = 'USER_LOGIN';
 
+console.log('loading fetching');
+
 // SYNC ACTION CREATORS
 export function startFetchUser() {
     return { type: START_FETCH_USER };

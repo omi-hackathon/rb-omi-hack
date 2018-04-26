@@ -8,8 +8,9 @@ import { Redirect, Route, Switch } from 'react-router';
 import { isAuthenticated } from './utils/auth';
 //import Loader from 'components/loader/loader';
 import Header from 'components/header/header';
-import Login from 'scenes/login/login';
+//import Login from 'scenes/login/login';
 import Home from 'scenes/home/home';
+import Licenses from 'scenes/licenses/licenses';
 import registerServiceWorker from 'registerServiceWorker';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Initialiser from 'initialiser';
@@ -21,12 +22,10 @@ injectTapEventPlugin();
 
 const history = Initialiser.history;
 
-const mapStateToProps = state => state;
-
-/*const mapStateToProps = state => ({
+const mapStateToProps = state => ({
     user: state.user,
     fetching: state.fetching,
-});*/
+});
 
 const renderRedirect = props => {
     if (isAuthenticated()) {
@@ -42,7 +41,7 @@ const renderRedirect = props => {
     return (
         <Redirect
             to={{
-                pathname: '/login',
+                pathname: '/',
                 state: { from: props.location },
             }}
         />
@@ -57,11 +56,11 @@ ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <div>
-                <Route path="/" render={() => isAuthenticated() && <Header />} />
+                <Header />
                 <div className="view-container">
                     <Switch>
-                        <Route exact path="/login" component={Login} />
-                        <PrivateRoute exact path="/" component={Home} />
+                        <Route exact path="/" component={Home} />
+                        <PrivateRoute exact path="/licenses" component={Licenses} />
                         <PrivateRoute component={() => <h1>404 - Not Found</h1>} />
                     </Switch>
                 </div>
@@ -70,5 +69,5 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root'),
 );
-
+///<PrivateRoute exact path="/" component={Home} />
 registerServiceWorker();

@@ -14,7 +14,7 @@ export function login(user) {
 }
 export function logout() {
     localStorage.clear();
-    Initialiser.history.push('/login');
+    Initialiser.history.push('/');
     return { type: USER_LOGOUT, user: { auth_token: null } };
 }
 
@@ -61,6 +61,8 @@ export function selectUser() {
 
 // REDUCER
 export default function reducer(state = Initialiser.initialState.user, action) {
+    const USER_LOGIN = 'USER_LOGIN';
+    const USER_LOGOUT = 'USER_LOGOUT';
     switch (action.type) {
         case USER_LOGIN:
         case USER_LOGOUT:

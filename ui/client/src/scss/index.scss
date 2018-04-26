@@ -1,5 +1,56 @@
 @import './variables';
+@import './mixins';
 
 * {
     font-family: Arial, sans-serif;
+}
+
+.view-container {
+    padding: 16px 32px;
+}
+
+.search-box {
+    input {
+        height: 32px;
+        border-radius: 2px;
+        margin-right: $spacing-s;
+        padding-left: 1px;
+        border: 1px solid $color-light-gray;
+        padding-left: 1px;
+    }
+    margin-bottom: $spacing-l;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th {
+        height: 40px;
+        background-color: $color-red;
+        text-align: center;
+        color: $color-white;
+    }
+
+    td {
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: $color-light-gray;
+    }
+}
+
+// Apply mixins
+
+button.button {
+    @include button();
+}
+
+.modal-overlay {
+    @include modal-overlay();
+
+    .modal {
+        @include modal();
+    }
 }

@@ -1,0 +1,49 @@
+@import '../../scss/variables';
+
+.select-license-modal .modal-overlay .modal {
+    max-width: 600px;
+
+    .modal__content {
+        background-color: #fff;
+        padding: 0 $spacing-s;
+
+        p {
+            line-height: 150%;
+        }
+
+        .licenses {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: stretch;
+
+            .license {
+                border: 1px solid $color-gray;
+                box-shadow: $shadow-black-0;
+                flex-grow: 1;
+                margin: 0 $spacing-m;
+                padding: $spacing-m $spacing-l;
+                > h1 {
+                    font-size: $text-size-xl;
+                    text-align: center;
+                }
+                > h2 {
+                    font-size: $text-size-m;
+                }
+                > ul {
+                    > li {
+                    }
+                }
+                > .button-license {
+                    display: block;
+                    margin: 64px auto 0;
+                }
+                &.license-standard {
+                }
+
+                &.license-advanced {
+                }
+            }
+        }
+    }
+}

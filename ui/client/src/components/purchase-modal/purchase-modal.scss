@@ -1,0 +1,29 @@
+@import '../../scss/variables';
+
+.purchase-modal .modal-overlay .modal {
+    max-width: 350px;
+
+    .modal__content {
+        background-color: #fff;
+        padding: 0 $spacing-s;
+
+        > p {
+            line-height: 150%;
+        }
+
+        .payment-details {
+            h4 {
+                margin-bottom: 0;
+            }
+            .code {
+                font-family: monospace;
+                font-size: $text-size-m;
+            }
+            img {
+                display: block;
+                margin: 0 auto 0;
+                width: 200px;
+            }
+        }
+    }
+}

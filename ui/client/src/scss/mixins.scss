@@ -1,0 +1,143 @@
+@import './variables';
+
+@mixin button() {
+    background-color: $color-red;
+    border-radius: $border-radius-soft;
+    border: none;
+    color: white;
+    padding: $spacing-xs $spacing-s;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    line-height: 1;
+    font-size: $text-size-m;
+    font-weight: 300;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: $color-light-red;
+    }
+
+    &.cancel {
+        background-color: $color-gray;
+        color: $color-white;
+
+        &:hover {
+            background-color: $color-light-gray;
+            color: $color-white;
+        }
+    }
+
+    &.dark {
+        background-color: $color-dark-red;
+        color: white;
+
+        &:hover {
+            background-color: $color-light-red;
+        }
+    }
+
+    /*&.warn {
+        background-color: $color-state-red;
+        color: white;
+
+        &:hover {
+            background-color: $color-state-red-up;
+        }
+    }*/
+
+    &.disabled {
+        pointer-events: none;
+        background-color: $color-light-gray;
+        color: $color-white;
+    }
+}
+
+@mixin modal-overlay() {
+    z-index: 1100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+
+    transition: all 0.4s ease-in-out;
+    opacity: 0;
+
+    &.modal-overlay__after-open {
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+
+        .modal {
+            transition: all 0.3s ease-in-out;
+            margin: 128px auto;
+        }
+    }
+    &.modal-overlay__before-close {
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+
+        .modal {
+            transition: all 0.5s ease-in-out;
+            margin-top: 96px;
+        }
+    }
+}
+
+@mixin modal() {
+    display: flex;
+    flex-direction: column;
+    z-index: 1200;
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: $border-radius-soft;
+    padding: $spacing-m $spacing-s;
+    outline: none;
+
+    .modal__title {
+        display: flex;
+        align-items: center;
+        color: $color-black;
+        padding-bottom: $spacing-s;
+
+        h4 {
+            font-weight: 300;
+            font-size: $text-size-l;
+            margin: 0;
+            flex: 1;
+        }
+
+        .close {
+            font-size: $text-size-l;
+            float: right;
+            margin-right: 6px;
+        }
+
+        .close:hover {
+            cursor: pointer;
+        }
+    }
+
+    .modal__content {
+        flex: 1;
+        background-color: $color-light-gray;
+        margin: 0 (-1 * $spacing-s);
+    }
+
+    .modal__actions {
+        //display: flex;
+        //align-items: center;
+        margin-top: $spacing-m;
+
+        .button:last-child:not(:first-child) {
+            float: right;
+        }
+    }
+}
