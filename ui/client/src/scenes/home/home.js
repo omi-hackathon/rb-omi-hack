@@ -32,12 +32,10 @@ class Home extends Component {
                 <div id="table">
                     <table class="mk-table">
                         <thead>
-                            {' '}
                             <tr>
-                                {' '}
-                                <th> Title </th> <th> Artist </th> <th> Duration </th> <th> Genre </th> <th> Mood </th>{' '}
-                                <th> </th>{' '}
-                            </tr>{' '}
+                                <th> Title </th> <th> Artist </th> <th> Duration </th> <th> Genre </th> <th> Mood </th>
+                                <th> </th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr>
@@ -47,11 +45,11 @@ class Home extends Component {
                                 <td class="genre-td"> Ambient </td>
                                 <td class="mood-td"> Calm </td>
                                 <td class="license-td">
-                                    {' '}
-                                    <button className="license-button">
-                                        {' '}
-                                        <span> License </span>{' '}
-                                    </button>{' '}
+                                    <button
+                                        className="license-button"
+                                        onClick={() => this.setState({ selectLicenseModalOpen: true })}>
+                                        <span> Purchase </span>
+                                    </button>
                                 </td>
                             </tr>
                             <tr>
@@ -61,11 +59,11 @@ class Home extends Component {
                                 <td class="genre-td"> Electronic </td>
                                 <td class="mood-td"> Cinematic </td>
                                 <td class="license-td">
-                                    {' '}
-                                    <button className="license-button">
-                                        {' '}
-                                        <span> License </span>{' '}
-                                    </button>{' '}
+                                    <button
+                                        className="license-button"
+                                        onClick={() => this.setState({ selectLicenseModalOpen: true })}>
+                                        <span> Purchase </span>
+                                    </button>
                                 </td>
                             </tr>
                             <tr>
@@ -75,15 +73,16 @@ class Home extends Component {
                                 <td class="genre-td"> Rock </td>
                                 <td class="mood-td"> Action </td>
                                 <td class="license-td">
-                                    <button className="license-button">
-                                        <span> License </span>
+                                    <button
+                                        className="license-button"
+                                        onClick={() => this.setState({ selectLicenseModalOpen: true })}>
+                                        <span> Purchase </span>
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <button onClick={() => this.setState({ selectLicenseModalOpen: true })}>Buy</button>
                 <SelectLicenseModal
                     isOpen={this.state.selectLicenseModalOpen}
                     title="Select the license you want to buy"
