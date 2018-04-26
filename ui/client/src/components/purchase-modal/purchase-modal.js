@@ -1,15 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import api from '../../utils/api';
 import 'components/purchase-modal/purchase-modal.scss';
 
 class PurchaseModal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+        };
+    }
     componentWillMount() {
         Modal.setAppElement('#root');
     }
 
-    action(name) {
-        this.props.closeModal(name);
+    async action(name) {
+        if (!this.state.loading) {
+            if (name === 'purchase') {
+                this.setState({ loading: true });
+                await api.buyLicense(window.GoogleAuth.currentUser.get().El, this.props.isrc, this.props.licenseType);
+                this.setState({ loading: false });
+                this.props.closeModal(name);
+            } else {
+                this.props.closeModal(name);
+            }
+        }
     }
 
     render() {
@@ -46,7 +62,7 @@ class PurchaseModal extends React.Component {
                                 onClick={() => this.action(action.name)}
                                 type="button"
                                 className={`button ${action.buttonClass}`}>
-                                {action.name}
+                                {action.name === 'purchase' && this.state.loading ? 'loading' : action.name}
                             </button>
                         ))}
                 </div>
@@ -66,6 +82,8 @@ PurchaseModal.propTypes = {
         }),
     ),
     title: PropTypes.string,
+    isrc: PropTypes.string,
+    licenseType: PropTypes.number,
 };
 
 export default PurchaseModal;

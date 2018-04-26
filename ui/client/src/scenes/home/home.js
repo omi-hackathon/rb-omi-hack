@@ -11,6 +11,7 @@ class Home extends Component {
         this.state = {
             recordings: [{}],
             isrc: null,
+            licenseType: 0,
             selectedLicense: null,
             selectLicenseModalOpen: false,
             purchaseModalOpen: false,
@@ -33,7 +34,12 @@ class Home extends Component {
     }
 
     selectLicense(licenseType, paymentAmount) {
-        this.setState({ paymentAmount, licenseType, selectLicenseModalOpen: false, purchaseModalOpen: true });
+        this.setState({
+            paymentAmount,
+            licenseType,
+            selectLicenseModalOpen: false,
+            purchaseModalOpen: true,
+        });
     }
 
     buyLicense() {}
@@ -102,7 +108,7 @@ class Home extends Component {
                                     </ul>
                                     <button
                                         className="button button-license"
-                                        onClick={() => this.selectLicense('standard', '1.99')}>
+                                        onClick={() => this.selectLicense(0, '1.99')}>
                                         Purchase
                                     </button>
                                 </div>
@@ -116,7 +122,7 @@ class Home extends Component {
                                     </ul>
                                     <button
                                         className="button button-license"
-                                        onClick={() => this.selectLicense('advanced', '29.99')}>
+                                        onClick={() => this.selectLicense(1, '29.99')}>
                                         Purchase
                                     </button>
                                 </div>
@@ -146,6 +152,8 @@ class Home extends Component {
                             </div>
                         </div>
                     }
+                    licenseType={this.state.licenseType}
+                    isrc={this.state.isrc}
                     actions={[{ name: 'back', buttonClass: 'cancel' }, { name: 'purchase', buttonClass: '' }]}
                     closeModal={name => {
                         if (name === 'cancel') {

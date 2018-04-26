@@ -34,10 +34,11 @@ class API {
         return this.request('GET', 'licenses');
     }
 
-    buyLicense(user_id, isrc) {
-        return this.request('POST', 'videos/buy', null, {
+    buyLicense(user_id, isrc, license_type) {
+        return this.request('POST', 'license/purchase', null, {
             user_id,
             isrc,
+            license_type,
         });
     }
 

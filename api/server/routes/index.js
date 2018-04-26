@@ -25,6 +25,13 @@ module.exports = function(app) {
         res.json([]);
     });
 
+    app.post(`/${config.api.version}/api/license/purchase`, (req, res) => {
+        console.log(req.body);
+        setTimeout(() => {
+            res.sendStatus(200);
+        }, 3000);
+    });
+
     // Catch unknown API endpoints as 404
     app.all(`/${config.api.version}/*`, (req, res) => Response.NotFound().send(res));
 };
