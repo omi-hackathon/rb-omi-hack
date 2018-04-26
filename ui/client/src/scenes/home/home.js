@@ -9,7 +9,8 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recordings: [],
+            recordings: [{}],
+            isrc: null,
             selectedLicense: null,
             selectLicenseModalOpen: false,
             purchaseModalOpen: false,
@@ -49,53 +50,29 @@ class Home extends Component {
                     <table className="mk-table">
                         <thead>
                             <tr>
-                                {Object.keys(this.state.recordings.map(r => <th key={r}>{r}</th>))}
+                                {Object.keys(this.state.recordings[0]).map(r => <th key={r}>{r}</th>)}
                                 <th />
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="title-td"> ABC </td>
-                                <td className="artist-td"> Mike </td>
-                                <td className="duration-td"> 3:10 </td>
-                                <td className="genre-td"> Ambient </td>
-                                <td className="mood-td"> Calm </td>
-                                <td className="license-td">
-                                    <button
-                                        className="license-button"
-                                        onClick={() => this.setState({ selectLicenseModalOpen: true })}>
-                                        <span> Purchase </span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="title-td"> DEF </td>
-                                <td className="artist-td"> Stephen </td>
-                                <td className="duration-td"> 2:34 </td>
-                                <td className="genre-td"> Electronic </td>
-                                <td className="mood-td"> Cinematic </td>
-                                <td className="license-td">
-                                    <button
-                                        className="license-button"
-                                        onClick={() => this.setState({ selectLicenseModalOpen: true })}>
-                                        <span> Purchase </span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="title-td"> GHI </td>
-                                <td className="artist-td"> Ursi </td>
-                                <td className="duration-td"> 1:20 </td>
-                                <td className="genre-td"> Rock </td>
-                                <td className="mood-td"> Action </td>
-                                <td className="license-td">
-                                    <button
-                                        className="license-button"
-                                        onClick={() => this.setState({ selectLicenseModalOpen: true })}>
-                                        <span> Purchase </span>
-                                    </button>
-                                </td>
-                            </tr>
+                            {this.state.recordings.map(recording => (
+                                <tr key={recording.isrc}>
+                                    {Object.keys(recording).map(prop => (
+                                        <td key={prop}>
+                                            <span>{recording[prop]}</span>
+                                        </td>
+                                    ))}
+                                    <td>
+                                        <button
+                                            className="license-button"
+                                            onClick={() =>
+                                                this.setState({ selectLicenseModalOpen: true, isrc: recording.isrc })
+                                            }>
+                                            <span> Purchase </span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
