@@ -6,7 +6,8 @@ contract ILicensor {
     function IssueLicense(string _userID, uint _recordingID, uint8 _licenseType) public returns (uint);
     function LinkToLicense(string _videoID, uint _licenseID) public;
     function RevokeLicense(uint _licenseID) public;
-    function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint, uint, string);
+    function GetISRCs() view public returns (string);
+    function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint8, uint8, string);
     function GetRecording(uint _recordingID) view public returns (uint, string);
     function GetRecordingByISRC(string _isrc) view public returns (uint, string);
     function GetLicensesByVideoID(string _videoID) view public returns (string);

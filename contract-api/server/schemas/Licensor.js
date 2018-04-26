@@ -77,6 +77,15 @@ module.exports = {
         },
         outputs: {},
     },
+    GetISRCs: {
+        inputs: {},
+        outputs: {
+            0: {
+                transform: value => value,
+                validate: Joi.any(),
+            },
+        },
+    },
     GetLicense: {
         inputs: {
             _licenseID: {

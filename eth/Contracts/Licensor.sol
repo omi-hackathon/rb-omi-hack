@@ -10,7 +10,6 @@ contract Licensor is ILicensor, Ownable {
     string omiEndpoint;
     string licensorName;
 
-
     struct Recording {
         uint recordingID;
         string isrc;
@@ -23,8 +22,8 @@ contract Licensor is ILicensor, Ownable {
         uint licenseID;
         string userID;
         uint recordingID;
-        uint status;
-        uint licenseType;
+        uint8 status;
+        uint8 licenseType;
         string videoID;
     }
 
@@ -58,41 +57,49 @@ contract Licensor is ILicensor, Ownable {
         });
         recordings.push(r);
         isrcToRecordingID[_isrc] = recordingID;
-
+        
         return recordingID;
     }
     
-    function IssueLicense(string _userID, uint _recordingID, uint _licenseType) public onlyOwner returns (uint) {
+    function IssueLicense(string _userID, uint _recordingID, uint8 _licenseType) public onlyOwner returns (uint) {
         uint licenseID = licenses.length;
         License memory l = License({
             licenseID: licenseID,
             userID: _userID,
             recordingID: _recordingID,
-            status: uint(LicenseStatus.PURCHASED),
+            status: uint8(LicenseStatus.PURCHASED),
             licenseType: _licenseType,
             videoID: ""
         });
         licenses.push(l);
         userIDToLicenseIDs[_userID].push(licenseID);
-
+        
         return licenseID;
     }
 
     function LinkToLicense(string _videoID, uint _licenseID) public onlyOwner {
-        uint[] memory v = videoIDtoLicenseIDs[_videoID];
-        if(v.length == 0){
-            videoIDtoLicenseIDs[_videoID] = new uint[](1);
-        }
         videoIDtoLicenseIDs[_videoID].push(_licenseID);
     }
 
     function RevokeLicense(uint _licenseID) public onlyOwner {
-        licenses[_licenseID].status = uint(LicenseStatus.REVOKED);
+        licenses[_licenseID].status = uint8(LicenseStatus.REVOKED);
     }
 
     // ------------- PUBLIC READS ----------------
 
-    function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint, uint, string) {
+    function GetISRCs() view public returns (string) {
+        string memory s = "";
+        for (uint i = 0; i < recordings.length; i++) {
+            if (i != 0) {
+                s = Utils.strcat(Utils.strcat(s, ","), recordings[i].isrc);
+            } else {
+                s = Utils.strcat(s, recordings[i].isrc);
+            }
+        }
+        return s;
+    }
+
+    function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint8, uint8, string) {
         License memory l = licenses[_licenseID];
         return (
             l.licenseID,
