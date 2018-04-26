@@ -1,5 +1,6 @@
 # built files and artifacts
 dist
+build
 
 # dependencies
 node_modules

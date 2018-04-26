@@ -10,6 +10,7 @@ contract Licensor is ILicensor, Ownable {
     string omiEndpoint;
     string licensorName;
 
+
     struct Recording {
         uint recordingID;
         string isrc;
