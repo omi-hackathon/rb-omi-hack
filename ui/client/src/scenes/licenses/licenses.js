@@ -72,7 +72,7 @@ class Licenses extends Component {
                             </div>
                         </div>
                     }
-                    actions={[{ name: 'back', buttonClass: 'cancel' }, { name: 'Link', buttonClass: '' }]}
+                    actions={[{ name: 'cancel', buttonClass: 'cancel' }, { name: 'Link', buttonClass: '' }]}
                     closeModal={name => {
                         if (name === 'cancel') {
                             this.setState({ linkModalOpen: false });
