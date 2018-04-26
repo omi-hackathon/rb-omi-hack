@@ -45,7 +45,7 @@ contract Licensor is ILicensor, Ownable {
         Recording.push(
             {
                 recordingID: recordingID,
-                isrc: _isrc,
+                isrc: _isrc
             }
         );
 
