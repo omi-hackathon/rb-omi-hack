@@ -1,9 +1,9 @@
 pragma solidity ^0.4.19;
 
-import "./IMarketplace.sol";
+import "./ILicensor.sol";
 import "./Ownable.sol";
 
-contract Marketplace is IMarketplace, Ownable {
+contract Licensor is ILicensor, Ownable {
     
     // structs
     struct Licensor {
