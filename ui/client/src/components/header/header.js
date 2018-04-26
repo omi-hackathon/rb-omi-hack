@@ -86,6 +86,9 @@ class Header extends Component {
                 <div className="title">OMI Hackathon</div>
                 <nav>
                     <ul>
+                      <li>
+                          <Link to="/"> home </Link>
+                      </li>
                         {isAuthenticated() && (
                             <li ref={ref => (this.self = ref)}>
                                 <strong onClick={e => this.showMenu(e)}>{this.state.user.ofa}</strong>

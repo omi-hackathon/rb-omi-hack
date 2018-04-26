@@ -5,7 +5,7 @@ class Licenses extends Component {
     render() {
         return (
             <div id="parent">
-                <div id="Title">Marketplace for licensable music</div>
+                <div id="Title">Your licenses</div>
                 <div id="search">
                     <input type="search" id="mySearch" name="q" />
                     <button>Search</button>

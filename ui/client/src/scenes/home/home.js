@@ -42,9 +42,9 @@ class Home extends Component {
                                 <td class="mood-td"> Calm </td>
                                 <td class="license-td">
                                     {' '}
-                                    <button className="license-button">
+                                    <button className="license-button" onClick={() => this.setState({ selectLicenseModalOpen: true })}>
                                         {' '}
-                                        <span> License </span>{' '}
+                                        <span> Purchase </span>{' '}
                                     </button>{' '}
                                 </td>
                             </tr>
@@ -56,9 +56,9 @@ class Home extends Component {
                                 <td class="mood-td"> Cinematic </td>
                                 <td class="license-td">
                                     {' '}
-                                    <button className="license-button">
+                                    <button className="license-button" onClick={() => this.setState({ selectLicenseModalOpen: true })}>
                                         {' '}
-                                        <span> License </span>{' '}
+                                        <span> Purchase </span>{' '}
                                     </button>{' '}
                                 </td>
                             </tr>
@@ -70,16 +70,15 @@ class Home extends Component {
                                 <td class="mood-td"> Action </td>
                                 <td class="license-td">
                                     {' '}
-                                    <button className="license-button">
+                                    <button className="license-button" onClick={() => this.setState({ selectLicenseModalOpen: true })}>
                                         {' '}
-                                        <span> License </span>{' '}
+                                        <span> Purchase </span>{' '}
                                     </button>{' '}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <button onClick={() => this.setState({ selectLicenseModalOpen: true })}>Buy</button>
                 <SelectLicenseModal
                     isOpen={this.state.selectLicenseModalOpen}
                     title="Select the license you want to buy"
