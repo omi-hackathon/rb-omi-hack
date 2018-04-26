@@ -15,7 +15,7 @@ contract Licensor is ILicensor, Ownable {
         
     struct License {
         uint licenseID;
-        string userId;
+        string userID;
         uint recordingID;
         uint8 status;
         uint8 licenseType;
@@ -57,14 +57,14 @@ contract Licensor is ILicensor, Ownable {
     }
 
     // TODO:
-    // function RegisterRecordings(string[] _isrc) public returns (uint){}
+    // function RegisterRecordings(string[] _isrc) public onlyOwner returns (uint){}
 
-    function IssueLicense(uint _userId, uint _recordingID, uint8 _licenseType) public returns (uint licenseID){
+    function IssueLicense(uint _userID, uint _recordingID, uint8 _licenseType) public onlyOwner returns (uint licenseID){
        uint licenseID = s.length;
        licenses.push (
            {
             licenseID: licenseID,
-            userId: _userId,
+            userID: _userID,
             recordingID: _recordingID,
             status: LicenseStatus.PURCHASED
            }
@@ -76,10 +76,10 @@ contract Licensor is ILicensor, Ownable {
     }
 
     // TODO:
-    // function LinkToLicense(string _videoID, uint _licenseID) public returns (bool){}
+    // function LinkToLicense(string _videoID, uint _licenseID) public onlyOwner returns (bool){}
 
     // TODO:
-    // function RevokeLicense(uint _licenseID) public returns (bool){}
+    // function RevokeLicense(uint _licenseID) public onlyOwner returns (bool){}
 
     // ------------- PUBLIC READS ----------------
     
@@ -110,12 +110,26 @@ contract Licensor is ILicensor, Ownable {
         );
     }
 
-    function GetRecordingByVideoId(string videoID) constant public returns (uint, string, uint, uint8){
-
+    function GetLicenseByVideoID(string _videoID) constant public returns (uint, string, uint, uint8){
+        License memory lic = videoIDToLicenses[_videoID];
+        return (
+            lic.licenseID,
+            lic.userID,
+            lic.recordingID,
+            lic.status,
+            lic.licenseType
+        );
     }
 
-    function GetRecordingByUserId(string userId) constant public returns (uint, string, uint, uint8){
-
+    function GetLicenseByUserID(string _userID) constant public returns (uint, string, uint, uint8){
+        License memory lic = userIDToLicenses[_userID];
+        return ( 
+            lic.licenseID,
+            lic.userID,
+            lic.recordingID,
+            lic.status,
+            lic.licenseType       
+        );
     }
     
 }
