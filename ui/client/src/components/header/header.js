@@ -13,6 +13,7 @@ class Header extends Component {
             redirect: false,
             showMenu: false,
         };
+        this.updateSigninStatus = this.updateSigninStatus.bind(this);
     }
 
     componentWillUnmount() {
@@ -83,13 +84,17 @@ class Header extends Component {
         //this.setState({ redirect: true });
     }
 
-    async updateSigninStatus(isSignedIn) {
-        console.log(isSignedIn);
-        console.log('============ ', isSignedIn);
-        console.log(window.GoogleAuth.currentUser.get());
-        const user = window.GoogleAuth.currentUser.get();
-        console.log(this);
-        this.setState({ user, redirect: true });
+    logout() {
+        window.GoogleAuth.signOut();
+        this.props.logout();
+        //this.setState({ user: null });
+    }
+
+    updateSigninStatus(isSignedIn) {
+        console.log('signed in: ' + isSignedIn);
+        const user = window.GoogleAuth.currentUser.get().w3;
+        console.log(user);
+        this.setState({ user, redirect: true, showMenu: false });
     }
 
     render() {
@@ -99,24 +104,30 @@ class Header extends Component {
                 <nav>
                     <ul>
                         {isAuthenticated() && (
-                            <li>
-                                <Link to="/" onClick={e => this.showMenu(e)}>
-                                    <strong>{this.state.user.ofa}</strong>
-                                </Link>
-                                <img src={this.state.user.Paa} alt="User avatar" />
+                            <li ref={ref => (this.self = ref)}>
+                                <strong onClick={e => this.showMenu(e)}>{this.state.user.ofa}</strong>
+                                <img src={this.state.user.Paa} alt="User avatar" onClick={e => this.showMenu(e)} />
+                                <div className="menu-dock">
+                                    <div className={'menu' + (this.state.showMenu ? ' show' : '')}>
+                                        <ul>
+                                            <li>
+                                                <Link to="/licenses">View Your Licenses</Link>
+                                            </li>
+                                            <li>
+                                                <a onClick={e => this.logout(e)}>Logout</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </li>
                         )}
-                        <li>
-                            {isAuthenticated() ? (
+                        {!isAuthenticated() && (
+                            <li>
                                 <a onClick={e => this.login(e)}>
                                     <small>log in</small>
                                 </a>
-                            ) : (
-                                <a onClick={this.props.logout}>
-                                    <small>log out</small>
-                                </a>
-                            )}
-                        </li>
+                            </li>
+                        )}
                     </ul>
                 </nav>
             </header>

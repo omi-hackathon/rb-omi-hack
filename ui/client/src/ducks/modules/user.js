@@ -14,7 +14,7 @@ export function login(user) {
 }
 export function logout() {
     localStorage.clear();
-    Initialiser.history.push('/login');
+    Initialiser.history.push('/');
     return { type: USER_LOGOUT, user: { auth_token: null } };
 }
 
