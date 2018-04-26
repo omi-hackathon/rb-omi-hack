@@ -14,7 +14,7 @@ contract Licensor is ILicensor, Ownable {
 
     struct Recording {
         uint recordingID;
-        bytes12 isrc;
+        string isrc;
         uint licensorID;
         string internalID;
 
@@ -50,7 +50,7 @@ contract Licensor is ILicensor, Ownable {
         // TODO: emit event
     }
 
-    function RegisterRecording(uint _internalID, bytes12 _isrc, uint _licensorID) public returns (uint recordingID) {
+    function RegisterRecording(uint _internalID, string _isrc, uint _licensorID) public returns (uint recordingID) {
         uint recordingID = Recordings.length;
         Recording.push(
             {
@@ -66,7 +66,7 @@ contract Licensor is ILicensor, Ownable {
         isrcToRecordings[_isrc] = recordingID;
     }
 
-    function GetRecording(uint _recordingID) public returns (uint, bytes12, uint, uint8){
+    function GetRecording(uint _recordingID) public returns (uint, string, uint, uint8){
         Recording memory rec = Recordings[_recordingID];
         return (
             rec.recordingID,
@@ -76,7 +76,7 @@ contract Licensor is ILicensor, Ownable {
         );
     }
      
-   function GetRecordingByISRC(string _isrc) public returns (uint, bytes12, uint, uint8){
+   function GetRecordingByISRC(string _isrc) public returns (uint, string, uint, uint8){
        return (
             isrcToRecordings[_isrc].recordingID,
             isrcToRecordings[_isrc].isrc,
