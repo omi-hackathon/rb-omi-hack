@@ -66,7 +66,7 @@ contract Licensor is ILicensor, Ownable {
     }
     
     function IssueLicense(string _userID, uint _recordingID, uint _licenseType) public onlyOwner returns (uint) {
-        require(recordings[_recordingID] != 0);
+        require(recordings.length +1 >= _recordingID);
         require(_licenseType == uint(LicenseType.NONCOMMERCIAL) || _licenseType == uint(LicenseType.COMMERCIAL));
         uint licenseID = licenses.length;
         License memory l = License({
@@ -78,8 +78,9 @@ contract Licensor is ILicensor, Ownable {
             videoID: ""
         });
         licenses.push(l);
-        if(userIDToLicenseIDs[_userID] == 0){
-            userIDToLicenseIDs[_userID] = [];
+        uint[] memory u = userIDToLicenseIDs[_userID];
+        if(u.length == 0){
+            userIDToLicenseIDs[_userID] = new uint[](1);
         }
         userIDToLicenseIDs[_userID].push(licenseID);
 
@@ -89,8 +90,9 @@ contract Licensor is ILicensor, Ownable {
     function LinkToLicense(string _videoID, uint _licenseID) public onlyOwner {
         require(licenses.length + 1 >= _licenseID);
         require(licenses[_licenseID].status == uint(LicenseStatus.PURCHASED));
-        if(videoIDtoLicenseIDs[_videoID] == 0){
-            videoIDtoLicenseIDs[_videoID] = [];
+        uint[] memory v = videoIDtoLicenseIDs[_videoID];
+        if(v.length == 0){
+            videoIDtoLicenseIDs[_videoID] = new uint[](1);
         }
         videoIDtoLicenseIDs[_videoID].push(_licenseID);
     }
@@ -98,10 +100,12 @@ contract Licensor is ILicensor, Ownable {
     function RevokeLicense(uint _licenseID) public onlyOwner {
         licenses[_licenseID].status = uint(LicenseStatus.REVOKED);
     }
+    //TODO: Require License status not REVOKED (also not EXPIRED?)
 
     // ------------- PUBLIC READS ----------------
 
     function GetLicense(uint _licenseID) view public returns (uint, string, uint, uint, uint, string) {
+        require(licenses.length + 1 >= _licenseID);
         License memory l = licenses[_licenseID];
         return (
             l.licenseID,
@@ -114,6 +118,7 @@ contract Licensor is ILicensor, Ownable {
     }
 
     function GetRecording(uint _recordingID) view public returns (uint, string) {
+        require(recordings.length + 1 >= _recordingID);
         Recording memory r = recordings[_recordingID];
         return (
             r.recordingID,
@@ -122,6 +127,7 @@ contract Licensor is ILicensor, Ownable {
     }
     
     function GetRecordingByISRC(string _isrc) view public returns (uint, string) {
+        require(isrcToRecordingID[_isrc] != 0);
         Recording memory r = recordings[isrcToRecordingID[_isrc]];
         return (
             r.recordingID,
