@@ -78,12 +78,18 @@ contract Licensor is ILicensor, Ownable {
             videoID: ""
         });
         licenses.push(l);
+        if(userIDToLicenseIDs[_userID] == 0){
+            userIDToLicenseIDs[_userID] = [];
+        }
         userIDToLicenseIDs[_userID].push(licenseID);
-        
+
         return licenseID;
     }
 
     function LinkToLicense(string _videoID, uint _licenseID) public onlyOwner {
+        if(videoIDtoLicenseIDs[_videoID] == 0){
+            videoIDtoLicenseIDs[_videoID] = [];
+        }
         videoIDtoLicenseIDs[_videoID].push(_licenseID);
     }
 
