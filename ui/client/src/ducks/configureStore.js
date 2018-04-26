@@ -5,11 +5,6 @@ import { createLogger } from 'redux-logger';
 import Initialiser from 'initialiser';
 import { default as fetching } from 'ducks/modules/fetching';
 import { default as user } from 'ducks/modules/user';
-/*import { default as recordingsStats } from 'ducks/modules/recordings-stats';
-import { default as recordings } from 'ducks/modules/recordings';
-import { default as recording } from 'ducks/modules/recording';
-import { default as hover } from 'ducks/modules/hover';
-import { default as toaster } from 'ducks/modules/toaster';*/
 
 const loggerMiddleware = createLogger();
 
