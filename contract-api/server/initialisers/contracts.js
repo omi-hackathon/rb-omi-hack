@@ -6,6 +6,10 @@ module.exports = async function() {
     const contracts = {};
     const filenames = fs.readdirSync('../eth/build/contracts'); // eslint-disable-line no-sync
     for (const filename of filenames) {
+        if (!config.contracts[filename.replace('.json', '')]) {
+            console.log('No contract configuration specified for: ', filename.replace('.json', ''));
+            continue;
+        }
         const contract = config.contracts[filename.replace('.json', '')];
         if (!contract.owner || !contract.address) {
             throw new Error(

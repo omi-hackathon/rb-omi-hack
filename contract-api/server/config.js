@@ -9,9 +9,12 @@ const configs = {
             version: 'v1',
         },
         contracts: {
-            SimpleStorage: {
-                owner: 'abc',
-                address: 'abc',
+            Licensor: {
+                owner: {
+                    address: process.env.OWNER_ADDRESS,
+                    password: process.env.OWNER_PASSWORD,
+                },
+                address: process.env.CONTRACT_ADDRESS,
             },
         },
         cors_origin: '*',
