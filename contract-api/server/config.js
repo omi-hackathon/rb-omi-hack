@@ -23,6 +23,15 @@ const configs = {
         api: {
             version: 'v1',
         },
+        contracts: {
+            Licensor: {
+                owner: {
+                    address: process.env.OWNER_ADDRESS,
+                    password: process.env.OWNER_PASSWORD,
+                },
+                address: process.env.CONTRACT_ADDRESS,
+            },
+        },
         cors_origin: '*',
     },
     production: {},
