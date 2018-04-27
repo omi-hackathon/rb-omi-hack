@@ -13,6 +13,7 @@ module.exports = async function() {
         }
         const contract = config.contracts[filename.replace('.json', '')];
         if (!contract.owner || !contract.address) {
+            console.log(config.contracts);
             throw new Error(
                 `Missing owner/address for contract '${filename.replace('.json', '')}' on network ${
                     process.env.ETHEREUM_NETWORK
