@@ -2,5 +2,5 @@ const Migrations = artifacts.require('Migrations');
 
 module.exports = function(deployer) {
     // Deploy the Migrations contract as our only task
-    deployer.deploy(Migrations, { gas: 6000000, from: '0x00dA34fE68c192E4d3FD02c38aB9773E5C75A475' });
+    deployer.deploy(Migrations, { gas: 6000000, from: process.env.OWNER_ADDRESS });
 };
