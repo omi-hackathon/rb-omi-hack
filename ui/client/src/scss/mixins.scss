@@ -1,6 +1,7 @@
 @import './variables';
 
 @mixin button() {
+    position: relative;
     background-color: $color-red;
     border-radius: $border-radius-soft;
     border: none;
