@@ -1,6 +1,7 @@
 # built files and artifacts
 dist
 build
+.password
 
 # dependencies
 node_modules
