@@ -5,7 +5,7 @@ const Contract = require('../utils/contract');
 
 module.exports = async function() {
     const contracts = {};
-    const filenames = fs.readdirSync(path.resolve(__dirname) + '../../../eth/build/contracts'); // eslint-disable-line no-sync
+    const filenames = fs.readdirSync('~/rb-omi-hack/eth/build/contracts'); // eslint-disable-line no-sync
     for (const filename of filenames) {
         if (!config.contracts[filename.replace('.json', '')]) {
             console.log('No contract configuration specified for: ', filename.replace('.json', ''));
