@@ -13,7 +13,7 @@ class API {
         return axios
             .request({
                 method,
-                url: `http://localhost:3000/v1/${url}`,
+                url: `http://34.252.128.0:3000/v1/${url}`,
                 params,
                 data,
                 headers: Object.assign(this.headers, {
@@ -32,7 +32,7 @@ class API {
 
     getLicenses() {
         return this.request('GET', 'licenses', {
-            userID: window.GoogleAuth.currentUser.get().El || window.GoogleAuth.currentUser.get().Eea
+            userID: window.GoogleAuth.currentUser.get().El || window.GoogleAuth.currentUser.get().Eea,
         });
     }
 
