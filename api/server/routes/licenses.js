@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios').create({
-    baseURL: `http://localhost:${process.env.CONTRACT_API_PORT}/v1/contracts/Licensor/`
+    baseURL: `http://localhost:${process.env.CONTRACT_API_PORT}/v1/contracts/Licensor/`,
 });
 
 module.exports = function() {
@@ -31,9 +31,7 @@ module.exports = function() {
 
     router.route('/purchase').post(async (req, res) => {
         try {
-            let response = (await axios.get(`/GetRecordingByISRC?_isrc=${
-                req.body.isrc
-            }`)).data.result;
+            let response = (await axios.get(`/GetRecordingByISRC?_isrc=${req.body.isrc}`)).data.result;
             const recordingID = response['0'];
 
             await axios.post(`/IssueLicense`, {
@@ -54,7 +52,7 @@ module.exports = function() {
             console.log('HERE', {
                 _videoID: req.body.videoID,
                 _licenseID: req.params.licenseID,
-            })
+            });
             await axios.post(`/LinkToLicense`, {
                 _videoID: req.body.videoID,
                 _licenseID: Number(req.params.licenseID),
@@ -62,7 +60,7 @@ module.exports = function() {
             return res.send(200);
         } catch (err) {
             console.log(err);
-            return res.send(500);   
+            return res.send(500);
         }
     });
 

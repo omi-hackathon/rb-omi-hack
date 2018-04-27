@@ -62,7 +62,14 @@ class PurchaseModal extends React.Component {
                                 onClick={() => this.action(action.name)}
                                 type="button"
                                 className={`button ${action.buttonClass}`}>
-                                {action.name === 'purchase' && this.state.loading ? 'loading' : action.name}
+                                <span className={this.state.loading && action.name === 'purchase' ? 'span-hide' : ''}>
+                                    {action.name}
+                                </span>
+                                <span
+                                    className={
+                                        'loader' + (this.state.loading && action.name === 'purchase' ? ' show' : '')
+                                    }
+                                />
                             </button>
                         ))}
                 </div>

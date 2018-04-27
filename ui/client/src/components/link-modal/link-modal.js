@@ -20,7 +20,7 @@ class LinkModal extends React.Component {
         if (!this.state.loading) {
             if (name === 'link') {
                 this.setState({ loading: true });
-                await api.linkVideo(this.props.licenseID, null);
+                await api.linkVideo(this.props.videoID, this.props.licenseID);
                 this.setState({ loading: false });
                 this.props.closeModal(name);
             } else {
@@ -63,7 +63,12 @@ class LinkModal extends React.Component {
                                 onClick={() => this.action(action.name)}
                                 type="button"
                                 className={`button ${action.buttonClass}`}>
-                                {action.name === 'link' && this.state.loading ? 'loading' : action.name}
+                                <span className={this.state.loading && action.name === 'link' ? 'span-hide' : ''}>
+                                    {action.name}
+                                </span>
+                                <span
+                                    className={'loader' + (this.state.loading && action.name === 'link' ? ' show' : '')}
+                                />
                             </button>
                         ))}
                 </div>
@@ -83,7 +88,8 @@ LinkModal.propTypes = {
         }),
     ),
     title: PropTypes.string,
-    licenseID: PropTypes.string,
+    licenseID: PropTypes.number,
+    videoID: PropTypes.string,
 };
 
 export default LinkModal;

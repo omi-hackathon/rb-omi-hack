@@ -79,7 +79,7 @@ class Home extends Component {
                                                             isrc: recording.isrc,
                                                         })
                                                     }>
-                                                    <span> Purchase </span>
+                                                    <span>Purchase</span>
                                                 </button>
                                             </td>
                                         </tr>
@@ -96,7 +96,6 @@ class Home extends Component {
                     title="Select the license you want to buy"
                     content={
                         <div>
-                            <p>This will overwrite your data for this work with the data in state.</p>
                             <div className="licenses">
                                 <div className="license license-standard">
                                     <h1>STANDARD</h1>
@@ -147,7 +146,7 @@ class Home extends Component {
                                 <p className="code">xxxx-xxxx-xxxx-xxxx</p>
                                 <h4>Expiration Date</h4>
                                 <p className="code">07/20</p>
-                                <h4>Carholder Name</h4>
+                                <h4>Cardholder Name</h4>
                                 <p className="code">John Doe</p>
                             </div>
                         </div>

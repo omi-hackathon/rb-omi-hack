@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../utils/api';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LinkModal from 'components/link-modal/link-modal';
 import './licenses.scss';
 
@@ -8,10 +8,10 @@ class Licenses extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            license: null,
+            licenseID: 0,
             linkModalOpen: false,
             licenses: [{}],
-            videoToLink: ''
+            videoToLink: '',
         };
         this.getLicenses = this.getLicenses.bind(this);
     }
@@ -27,10 +27,6 @@ class Licenses extends Component {
         } catch (err) {
             console.error(err);
         }
-    }
-
-    async linkVideo(videoID, licenseID) {
-        await api.linkVideo(videoID, licenseID);
     }
 
     render() {
@@ -60,16 +56,21 @@ class Licenses extends Component {
                                                 </td>
                                             ))}
                                             <td>
-                                                {license.link ? (
+                                                {license.videoID ? (
                                                     <button className="see-button">
-                                                        <Link to={license.link} target="_blank">
+                                                        <Link to={license.videoID} target="_blank">
                                                             See Video
                                                         </Link>
                                                     </button>
                                                 ) : (
                                                     <button
                                                         className="link-button"
-                                                        onClick={() => this.setState({ linkModalOpen: true, license })}>
+                                                        onClick={() =>
+                                                            this.setState({
+                                                                linkModalOpen: true,
+                                                                licenseID: license.licenseID,
+                                                            })
+                                                        }>
                                                         <span> Link Video </span>
                                                     </button>
                                                 )}
@@ -98,14 +99,11 @@ class Licenses extends Component {
                             </div>
                         </div>
                     }
-                    actions={[{ name: 'cancel', buttonClass: 'cancel' }, { name: 'Link', buttonClass: '' }]}
-                    closeModal={name => {
-                        if (name === 'cancel') {
-                            this.setState({ linkModalOpen: false });
-                        } else if (name === 'Link') {
-                            this.setState({ linkModalOpen: false });
-                            this.linkVideo(this.state.videoToLink, this.state.license.licenseID); 
-                        }
+                    licenseID={this.state.licenseID}
+                    videoID={this.state.videoToLink}
+                    actions={[{ name: 'cancel', buttonClass: 'cancel' }, { name: 'link', buttonClass: '' }]}
+                    closeModal={() => {
+                        this.setState({ linkModalOpen: false });
                     }}
                 />
             </div>
