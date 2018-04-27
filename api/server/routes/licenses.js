@@ -31,10 +31,10 @@ module.exports = function() {
 
     router.route('/purchase').post(async (req, res) => {
         try {
-            let response = (await axios.get(`/GetRecordingByISRC?_isrc=${req.body.isrc}`)).data.result;
+            const response = (await axios.get(`/GetRecordingByISRC?_isrc=${req.body.isrc}`)).data.result;
             const recordingID = response['0'];
 
-            await axios.post(`/IssueLicense`, {
+            await axios.post('/IssueLicense', {
                 _userID: req.body.userID,
                 _recordingID: recordingID,
                 _licenseType: req.body.licenseType,
@@ -53,7 +53,7 @@ module.exports = function() {
                 _videoID: req.body.videoID,
                 _licenseID: req.params.licenseID,
             });
-            await axios.post(`/LinkToLicense`, {
+            await axios.post('/LinkToLicense', {
                 _videoID: req.body.videoID,
                 _licenseID: Number(req.params.licenseID),
             });

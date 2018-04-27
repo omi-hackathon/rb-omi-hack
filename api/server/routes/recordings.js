@@ -8,7 +8,7 @@ module.exports = function() {
     const router = express.Router();
 
     router.route('/').get(async (req, res) => {
-        let response = (await axios.get(`/GetISRCs`)).data.result;
+        const response = (await axios.get('/GetISRCs')).data.result;
         const isrcs = response.split(',');
         const recordings = OMI_DATA.filter(item => isrcs.indexOf(item.isrc) > -1);
         return res.json(recordings);

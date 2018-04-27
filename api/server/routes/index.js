@@ -1,6 +1,5 @@
 const Response = require('../utils/response');
 const config = require('../config');
-const recordings = require('../data/recordings');
 const checkYoutubeToken = require('../middleware/auth').checkYoutubeToken;
 
 module.exports = function(app) {
