@@ -19,7 +19,7 @@
         "eslint-config-node": "^2.0.0",
         "express": "~4.15.2",
         "google-id-token-verifier": "^0.2.3",
-        "googleapis": "^29.0.0",
+        "googleapis": "^39.1.0",
         "helmet": "^3.9.0",
         "joi": "^13.1.0",
         "lodash": "^4.17.5",
