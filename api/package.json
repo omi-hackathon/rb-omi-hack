@@ -11,7 +11,7 @@
         "start": "sh ./scripts/start.sh"
     },
     "dependencies": {
-        "axios": "^0.17.1",
+        "axios": "^0.21.1",
         "body-parser": "~1.17.1",
         "cookie-parser": "~1.4.3",
         "dotenv": "^4.0.0",
