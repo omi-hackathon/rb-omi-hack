@@ -23,7 +23,7 @@
         "helmet": "^3.9.0",
         "joi": "^13.1.0",
         "lodash": "^4.17.5",
-        "moment": "^2.20.1",
+        "moment": "^2.29.4",
         "morgan": "^1.8.2",
         "request": "^2.83.0",
         "request-promise": "^4.2.2",
