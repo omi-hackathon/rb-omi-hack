@@ -11,12 +11,12 @@
         "start": "sh ./scripts/start.sh"
     },
     "dependencies": {
-        "body-parser": "~1.17.1",
+        "body-parser": "~1.20.1",
         "cookie-parser": "~1.4.3",
         "dotenv": "^4.0.0",
         "eslint": "^4.19.1",
         "eslint-config-node": "^2.0.0",
-        "express": "~4.15.2",
+        "express": "~4.15.5",
         "helmet": "^3.9.0",
         "joi": "^13.1.0",
         "lodash": "^4.17.5",
