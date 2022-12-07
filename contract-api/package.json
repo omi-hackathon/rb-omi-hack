@@ -16,7 +16,7 @@
         "dotenv": "^4.0.0",
         "eslint": "^4.19.1",
         "eslint-config-node": "^2.0.0",
-        "express": "~4.15.2",
+        "express": "~4.17.3",
         "helmet": "^3.9.0",
         "joi": "^13.1.0",
         "lodash": "^4.17.5",
